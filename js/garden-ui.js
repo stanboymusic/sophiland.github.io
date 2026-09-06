@@ -223,13 +223,13 @@ async function renderGardenView(gardenDoc, role, name) {
       ${role === 'sophia' ? `
       <div class="gdn-water-section">
         ${canWater
-          ? \`<button class="gdn-water-btn" id="gdn-water-btn">
+          ? `<button class="gdn-water-btn" id="gdn-water-btn">
                <span class="gdn-water-icon">💧</span> Regar el jardín
-             </button>\`
-          : \`<div class="gdn-already-watered">
+             </button>`
+          : `<div class="gdn-already-watered">
                <span>🌙</span>
                <p>Ya regaste hoy.<br><em>Vuelve mañana.</em></p>
-             </div>\`
+             </div>`
         }
       </div>
       ` : ''}
@@ -238,15 +238,15 @@ async function renderGardenView(gardenDoc, role, name) {
       <div class="gdn-message-section">
         <p class="eyebrow" style="margin-bottom:0.8rem">Libreta del jardinero</p>
         ${role === 'sophia' ? (canPost
-          ? \`<div class="gdn-msg-compose">
+          ? `<div class="gdn-msg-compose">
                <textarea class="gdn-textarea" id="gdn-msg-text"
                  placeholder="Deja algo escrito para Azuquita hoy…"
                  maxlength="400" rows="3"></textarea>
                <button class="gdn-msg-send-btn" id="gdn-msg-send">
                  Dejar nota 🌿
                </button>
-             </div>\`
-          : \`<p class="gdn-already-msg">Ya dejaste tu nota de hoy. <em>Hasta mañana.</em></p>\`
+             </div>`
+          : `<p class="gdn-already-msg">Ya dejaste tu nota de hoy. <em>Hasta mañana.</em></p>`
         ) : ""}
 
         <div class="gdn-msg-list" id="gdn-msg-list">
