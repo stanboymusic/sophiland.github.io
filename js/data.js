@@ -1,6 +1,10 @@
 /* ======================================================
    CONFIGURACIÓN Y CONTENIDO — edita aquí a medida que avanza el proyecto.
    Este es el ÚNICO archivo que deberías tocar semana a semana.
+
+   Los datos aquí son el FALLBACK local. Si Firestore tiene contenido,
+   Firestore tiene prioridad. Para subir estos datos a Firestore por primera
+   vez, abre la consola del navegador y ejecuta: seedFirestore()
    ====================================================== */
 
 // Fecha de desbloqueo: 21 feb 2027, 12:00am hora Venezuela (UTC-4) = 04:00 UTC
@@ -10,7 +14,8 @@ const TARGET_DATE = new Date("2027-02-21T04:00:00Z");
 const START_DATE = new Date("2026-08-27T00:00:00Z");
 
 // --- DIARIO: agrega una entrada por cada momento que quieras guardar ---
-const diaryEntries = [
+// (Estos datos se suben a Firestore con seedFirestore())
+window._localDiary = [
   { date: "27 jul 2026", title: "¿donde está mi bolso???", text: "estabamos con athonela en el edificio B y yo me lleve tu bolso al 9C porque pensabamos que ibas tras nosotros AJJAJAJJAJAA" },
   { date: "10 ago 2026", title: "sabor a vida", text: "me regalaste un chocolate cuando salimos del acto de encuentros!!! ese dia me abrazaste mucho y se sintió muy bonito" },
   { date: "18 ago 2026", title: "para estudiar o una excusa para hablar?", text: "hicimos llamada para estudiar el parcial de teorias,pero terminamos hablando hasta las 12am de puras tonterias" },
@@ -31,7 +36,7 @@ const diaryEntries = [
 // Pon las fotos como archivos normales dentro de assets/fotos/ (ej: assets/fotos/playa.jpg)
 // y referencia solo el nombre del archivo aquí. Nunca pegues la foto en base64 aquí:
 // eso es justo lo que vuelve pesada la página.
-const galleryPhotos = [
+window._localGallery = [
 
   { src: "assets/fotos/s1.jpg", caption: "20-08-26 me mandaste esta foto una mañana sin yo pedirlo" },
   { src: "assets/fotos/s2.jpg", caption: "23-08-26la amooooo" },
@@ -44,7 +49,7 @@ const galleryPhotos = [
 ];
 
 // --- POEMARIO: un poema por semana ---
-const poems = [
+window._localPoems = [
   {
     week: 1,
     range: "27 ago – 29 ago, 2026",
@@ -108,6 +113,6 @@ tratando de dibujarlas de memoria.`
 ];
 
 // --- LIBRO: capítulos, los que quieras ---
-const bookChapters = [
+window._localBook = [
   // { num: "I", title: "...", paragraphs: ["...", "..."] },
 ];

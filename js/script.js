@@ -1,7 +1,8 @@
 /* ======================================================
    LÓGICA — no hace falta tocar este archivo cada semana.
-   El contenido vive en data.js.
+   El contenido vive en data.js (y se sincroniza con Firestore).
    ====================================================== */
+import { loadContent } from './firebase.js';
 
 function pad(n){ return String(n).padStart(2,'0'); }
 
@@ -35,13 +36,22 @@ function updateCountdown(){
   });
 }
 
-function unlock(){
+async function unlock(){
   document.getElementById('lock').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  renderAll();
+
+  // Mostrar spinner mientras carga
+  document.getElementById('app').insertAdjacentHTML('afterbegin',
+    '<div id="fb-loading" style="text-align:center;padding:2rem;opacity:.6;">Cargando...</div>');
+
+  const content = await loadContent();
+  const loadingEl = document.getElementById('fb-loading');
+  if (loadingEl) loadingEl.remove();
+
+  renderAll(content);
 }
 
-function renderAll(){
+function renderAll({ diaryEntries, galleryPhotos, poems, bookChapters } = {}){
   const diarioEl = document.getElementById('diario-list');
   diarioEl.innerHTML = diaryEntries.length ? diaryEntries.map(e => `
     <div class="diary-entry">
