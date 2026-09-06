@@ -627,3 +627,123 @@ section.view.active{ display:block; }
   .gdn-cluster-svg path, .gdn-cluster-svg circle{ transition: none; }
   .gdn-spinner{ animation: none; }
 }
+
+/* ================================================================
+   NUESTRA CASA — sección de construcción
+   ================================================================ */
+
+.gdn-house-section{
+  border-top: 1px solid rgba(246,241,231,0.08);
+  padding-top: 1.5rem;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.gdn-house-locked .gdn-house-hint{
+  font-size: 0.85rem;
+  color: rgba(246,241,231,0.35);
+  font-style: italic;
+  line-height: 1.65;
+}
+
+/* Nombre de la casa */
+.gdn-house-name{
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem; font-weight: 500;
+  color: var(--lily);
+  margin: 0;
+  text-align: center;
+}
+
+/* SVG wrapper */
+.gdn-house-svg-wrap{
+  display: flex; justify-content: center;
+}
+.gdn-house-svg{
+  width: 100%; max-width: 240px; height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 4px 18px rgba(0,0,0,0.4));
+}
+
+/* Etiqueta de etapa actual */
+.gdn-house-stage-label{
+  font-size: 0.82rem;
+  color: rgba(246,241,231,0.5);
+  text-align: center;
+}
+.gdn-house-stage-label em{ color: var(--gold); font-style: italic; }
+
+/* Barra de progreso de etapas */
+.gdn-house-progress{
+  display: flex; justify-content: center; gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.gdn-house-step{
+  display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+  font-size: 0.62rem; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(246,241,231,0.25);
+  min-width: 52px; text-align: center;
+}
+.gdn-house-step.done{ color: rgba(201,166,107,0.6); }
+.gdn-house-step.next{ color: var(--gold); }
+.gdn-house-step-dot{
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(246,241,231,0.15);
+  border: 1px solid rgba(246,241,231,0.15);
+  transition: background 0.3s ease;
+}
+.gdn-house-step.done .gdn-house-step-dot{
+  background: rgba(201,166,107,0.5);
+  border-color: var(--gold);
+}
+.gdn-house-step.next .gdn-house-step-dot{
+  background: rgba(201,166,107,0.2);
+  border-color: var(--gold);
+  box-shadow: 0 0 6px rgba(201,166,107,0.4);
+}
+
+/* Botón de construcción */
+.gdn-build-btn{
+  align-self: center;
+  background: linear-gradient(135deg, rgba(201,166,107,0.18), rgba(201,166,107,0.06));
+  border: 1px solid rgba(201,166,107,0.5);
+  color: var(--gold);
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.78rem; letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.8rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.gdn-build-btn:hover:not(:disabled){
+  background: linear-gradient(135deg, rgba(201,166,107,0.32), rgba(201,166,107,0.14));
+  transform: scale(1.03);
+}
+.gdn-build-btn:disabled{
+  opacity: 0.45; cursor: not-allowed; transform: none;
+  border-color: rgba(246,241,231,0.15);
+  color: rgba(246,241,231,0.35);
+}
+.gdn-build-cost{
+  font-weight: 600; font-size: 0.9rem;
+}
+
+/* Botón inline (nombrar casa) */
+.gdn-inline-btn{
+  background: none; border: none;
+  color: var(--gold); font-style: italic;
+  font-family: inherit; font-size: inherit;
+  cursor: pointer; text-decoration: underline;
+  padding: 0;
+}
+.gdn-inline-btn:hover{ opacity: 0.75; }
+
+/* Hint genérico reutilizable */
+.gdn-house-hint{
+  font-size: 0.82rem;
+  color: rgba(246,241,231,0.4);
+  text-align: center;
+  line-height: 1.65;
+}
+

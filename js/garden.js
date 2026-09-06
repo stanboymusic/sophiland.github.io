@@ -67,12 +67,16 @@ export async function createGarden({ gardenName, sophiaName }) {
   const initial = {
     gardenName,
     sophiaName,
-    createdAt:      serverTimestamp(),
-    totalResources: 0,
-    streak:         0,
-    growthStage:    0,
-    waterCount:     0,
+    createdAt:       serverTimestamp(),
+    totalResources:  0,
+    streak:          0,
+    growthStage:     0,
+    waterCount:      0,
     lastWateredDate: null,
+    // Casa
+    houseUnlocked:   false,
+    houseStage:      0,
+    houseName:       null,
   };
   await setDoc(GARDEN_DOC(), initial);
   return initial;
@@ -118,12 +122,16 @@ export async function waterGarden(role) {
   // GrowthStage: sube cada 5 riegos totales (máx 5)
   const newGrowthStage = Math.min(5, Math.floor(newWaterCount / 5));
 
+  // Verificar si el jardín quedó en etapa 5 para desbloquear la casa
+  const shouldUnlockHouse = newGrowthStage >= 5 && !(g.houseUnlocked);
+
   await updateDoc(GARDEN_DOC(), {
     waterCount:                     newWaterCount,
     lastWateredDate:                today,
     totalResources:                 (g.totalResources || 0) + seedsEarned,
     streak:                         newStreak,
     growthStage:                    newGrowthStage,
+    ...(shouldUnlockHouse ? { houseUnlocked: true } : {}),
   });
 
   return {
@@ -162,4 +170,54 @@ export async function getMessages() {
   const q    = query(collection(db, "mensajes"), orderBy("createdAt", "desc"), limit(60));
   const snap = await getDocs(q);
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+// ── Firestore: construcción de la casa ─────────────────
+export const HOUSE_STAGES = [
+  { key: "cimientos",        label: "Cimientos",            cost: 30 },
+  { key: "paredes",          label: "Paredes",               cost: 40 },
+  { key: "techo",            label: "Techo",                 cost: 50 },
+  { key: "puertasVentanas",  label: "Puertas y ventanas",   cost: 40 },
+  { key: "decoracion",       label: "Toques finales",        cost: 40 },
+];
+
+/**
+ * Construye la siguiente etapa de la casa.
+ * Retorna { ok: true, newHouseStage, totalResources } si tuvo éxito.
+ * Retorna { ok: false, missing } si no hay suficientes semillas.
+ */
+export async function buildNextStage(role) {
+  if (role !== "sophia") throw new Error("Solo Sophia puede construir.");
+
+  const snap = await getDoc(GARDEN_DOC());
+  if (!snap.exists()) throw new Error("El jardín no existe todavía.");
+
+  const g = snap.data();
+  const currentStage = g.houseStage || 0;
+
+  if (currentStage >= HOUSE_STAGES.length) {
+    return { ok: false, complete: true };
+  }
+
+  const nextStep = HOUSE_STAGES[currentStage];
+  const resources = g.totalResources || 0;
+
+  if (resources < nextStep.cost) {
+    return { ok: false, missing: nextStep.cost - resources };
+  }
+
+  const newHouseStage = currentStage + 1;
+  const newResources  = resources - nextStep.cost;
+
+  await updateDoc(GARDEN_DOC(), {
+    houseStage:     newHouseStage,
+    totalResources: newResources,
+  });
+
+  return { ok: true, newHouseStage, totalResources: newResources };
+}
+
+export async function setHouseName(role, name) {
+  if (role !== "sophia") throw new Error("Solo Sophia puede nombrar la casa.");
+  await updateDoc(GARDEN_DOC(), { houseName: name.trim().slice(0, 50) });
 }

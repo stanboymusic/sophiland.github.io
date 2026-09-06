@@ -9,6 +9,7 @@ import {
   getLocalRole, getLocalName, setLocalRole,
   canWaterToday, waterGarden,
   canPostToday, postMessage, getMessages,
+  HOUSE_STAGES, buildNextStage, setHouseName,
 } from "./garden.js";
 
 // ── Referencias al DOM ──────────────────────────────────
@@ -254,6 +255,9 @@ async function renderGardenView(gardenDoc, role, name) {
         </div>
       </div>
 
+      <!-- Nuestra casa -->
+      ${renderHouseSection(gardenDoc, role)}
+
     </div>
   `;
 
@@ -309,9 +313,43 @@ async function renderGardenView(gardenDoc, role, name) {
       }
     });
   }
+
+  // Evento para build button
+  const buildBtn = document.getElementById("gdn-build-btn");
+  if (buildBtn) {
+    buildBtn.addEventListener("click", async () => {
+      buildBtn.disabled = true;
+      buildBtn.textContent = "Construyendo…";
+      try {
+        const result = await buildNextStage(role);
+        const updatedDoc = await getOrCreateGardenDoc();
+        if (result.ok) {
+          // Si la casa quedó completa y sin nombre, mostrar modal de nombre
+          if (result.newHouseStage >= HOUSE_STAGES.length && !updatedDoc.houseName) {
+            renderHouseNameModal(updatedDoc, role, name);
+          } else {
+            renderGardenView(updatedDoc, role, name);
+          }
+        } else {
+          // No alcanzó — refrescar la sección con el mensaje actualizado
+          renderGardenView(updatedDoc, role, name);
+        }
+      } catch (err) {
+        console.error(err);
+        buildBtn.disabled = false;
+        buildBtn.textContent = "Invertir semillas ✨";
+      }
+    });
+  }
+
+  // Evento para nombrar casa
+  const nameHouseBtn = document.getElementById("gdn-name-house-btn");
+  if (nameHouseBtn) {
+    nameHouseBtn.addEventListener("click", () => renderHouseNameModal(gardenDoc, role, name));
+  }
 }
 
-// ── Animación de riego ───────────────────────────────────
+// ── Animación de riego ─────────────────────────────────────
 function playWaterAnimation() {
   const wrap = document.getElementById("gdn-lily-wrap");
   if (!wrap) return;
@@ -420,5 +458,183 @@ function singleLily(cx, cy, scale, openPetals) {
   `;
 }
 
-// ── Init ─────────────────────────────────────────────────
+// ── Init ─────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", initGardenButton);
+
+// ── Sección de la casa (render) ────────────────────────
+function renderHouseSection(gardenDoc, role) {
+  const houseUnlocked = gardenDoc.houseUnlocked || false;
+  const houseStage    = gardenDoc.houseStage    || 0;
+  const houseName     = gardenDoc.houseName     || null;
+  const resources     = gardenDoc.totalResources || 0;
+
+  if (!houseUnlocked) {
+    return `
+      <div class="gdn-house-section gdn-house-locked">
+        <p class="eyebrow" style="margin-bottom:0.6rem">Nuestra casa</p>
+        <p class="gdn-house-hint">
+          El jardín aún está encontrando su forma.
+          Cuando los lirios florezcan del todo, la casa podrá empezar a construirse.
+        </p>
+      </div>`;
+  }
+
+  const isComplete     = houseStage >= HOUSE_STAGES.length;
+  const currentLabel   = isComplete
+    ? "Casa completa"
+    : HOUSE_STAGES[houseStage].label;
+  const nextCost       = isComplete ? 0 : HOUSE_STAGES[houseStage].cost;
+  const canAfford      = !isComplete && resources >= nextCost;
+  const missing        = isComplete ? 0 : nextCost - resources;
+
+  const houseTitle = houseName
+    ? `<h3 class="gdn-house-name serif">“${escHtml(houseName)}”</h3>`
+    : (role === 'sophia' && isComplete
+        ? `<p class="gdn-house-hint" style="color:var(--gold);font-style:italic">No le has puesto nombre todavía — <button class="gdn-inline-btn" id="gdn-name-house-btn">ponerle nombre</button></p>`
+        : '');
+
+  const buildBtn = (!isComplete && role === 'sophia') ? `
+    <button class="gdn-build-btn" id="gdn-build-btn" ${canAfford ? '' : 'disabled'}>
+      ${canAfford
+        ? `Invertir semillas ✨ <span class="gdn-build-cost">${nextCost}</span>`
+        : `Faltan <span class="gdn-build-cost">${missing}</span> semillas`
+      }
+    </button>` : '';
+
+  const progressInfo = isComplete
+    ? `<p class="gdn-house-stage-label">La casa está completa 🏡</p>`
+    : `<p class="gdn-house-stage-label">Siguiente: <em>${currentLabel}</em> &mdash; ${nextCost} semillas</p>`;
+
+  return `
+    <div class="gdn-house-section">
+      <p class="eyebrow" style="margin-bottom:0.4rem">Nuestra casa</p>
+      ${houseTitle}
+      <div class="gdn-house-svg-wrap">
+        ${houseSVG(houseStage)}
+      </div>
+      ${progressInfo}
+      <div class="gdn-house-progress">
+        ${HOUSE_STAGES.map((s, i) => `
+          <div class="gdn-house-step ${i < houseStage ? 'done' : i === houseStage ? 'next' : ''}">
+            <div class="gdn-house-step-dot"></div>
+            <span>${s.label}</span>
+          </div>`).join('')}
+      </div>
+      ${buildBtn}
+    </div>`;
+}
+
+// ── Modal para nombrar la casa ────────────────────────
+function renderHouseNameModal(gardenDoc, role, name) {
+  modalInner().innerHTML = `
+    <div class="gdn-onboard" style="text-align:center">
+      <div style="font-size:2.8rem; margin-bottom:0.5rem">🏡</div>
+      <p class="eyebrow">La casa está lista</p>
+      <h2 class="gdn-title serif">Solo falta un nombre</h2>
+      <p class="gdn-sub" style="max-width:320px;margin:0 auto">
+        Dále un nombre a la casa que construiste con tanto cuidado.
+      </p>
+      <div class="gdn-garden-name-wrap" style="margin-top:1.5rem">
+        <label class="gdn-label" for="gdn-house-name-input">¿Cómo se llamará?</label>
+        <input class="gdn-input" id="gdn-house-name-input" type="text"
+          placeholder="Ej: La casita de los lirios…" maxlength="50">
+      </div>
+      <button class="gdn-primary-btn" id="gdn-save-house-name" disabled style="margin-top:1.2rem">
+        Guardar nombre
+      </button>
+    </div>
+  `;
+
+  const input   = document.getElementById("gdn-house-name-input");
+  const saveBtn = document.getElementById("gdn-save-house-name");
+
+  input.addEventListener("input", () => {
+    saveBtn.disabled = input.value.trim().length === 0;
+  });
+
+  saveBtn.addEventListener("click", async () => {
+    saveBtn.disabled = true;
+    saveBtn.textContent = "Guardando…";
+    try {
+      await setHouseName(role, input.value.trim());
+      const updatedDoc = await getOrCreateGardenDoc();
+      renderGardenView(updatedDoc, role, name);
+    } catch (err) {
+      console.error(err);
+      saveBtn.disabled = false;
+      saveBtn.textContent = "Guardar nombre";
+    }
+  });
+}
+
+// ── SVG de la casa por etapas ──────────────────────────
+function houseSVG(stage) {
+  // Paleta usando vars CSS de :root
+  const wall   = "var(--night-2)";
+  const stroke = "var(--gold)";
+  const roof   = "var(--ink)";
+  const win    = "var(--sage)";
+  const door   = "var(--lily)";
+
+  // stage 0 = solo terreno / brote
+  // stage 1 = cimientos
+  // stage 2 = paredes
+  // stage 3 = techo
+  // stage 4 = puertas y ventanas
+  // stage 5 = decoración completa
+
+  const ground = `<line x1="20" y1="135" x2="220" y2="135" stroke="${stroke}" stroke-width="1" stroke-dasharray="4 3" opacity="0.3"/>`;
+
+  // Cimientos (etapa 1+)
+  const foundation = stage >= 1 ? `
+    <rect x="45" y="128" width="150" height="8" rx="1"
+      fill="${wall}" stroke="${stroke}" stroke-width="1" opacity="0.8"/>` : '';
+
+  // Paredes (etapa 2+)
+  const walls = stage >= 2 ? `
+    <rect x="55" y="68" width="130" height="60" rx="2"
+      fill="${wall}" stroke="${stroke}" stroke-width="1" opacity="0.9"/>` : '';
+
+  // Techo (etapa 3+)
+  const roofEl = stage >= 3 ? `
+    <polygon points="45,70 120,28 195,70"
+      fill="${roof}" stroke="${stroke}" stroke-width="1"/>
+    <polygon points="52,70 120,33 188,70"
+      fill="${wall}" stroke="${stroke}" stroke-width="0.5" opacity="0.4"/>` : '';
+
+  // Puerta y ventanas (etapa 4+)
+  const openings = stage >= 4 ? `
+    <rect x="102" y="94" width="36" height="34" rx="2"
+      fill="${roof}" stroke="${door}" stroke-width="1"/>
+    <rect x="66" y="80" width="22" height="20" rx="2"
+      fill="${win}" stroke="${stroke}" stroke-width="0.8" opacity="0.6"/>
+    <rect x="152" y="80" width="22" height="20" rx="2"
+      fill="${win}" stroke="${stroke}" stroke-width="0.8" opacity="0.6"/>
+    <line x1="77" y1="80" x2="77" y2="100" stroke="${stroke}" stroke-width="0.5" opacity="0.4"/>
+    <line x1="66" y1="90" x2="88" y2="90" stroke="${stroke}" stroke-width="0.5" opacity="0.4"/>
+    <line x1="163" y1="80" x2="163" y2="100" stroke="${stroke}" stroke-width="0.5" opacity="0.4"/>
+    <line x1="152" y1="90" x2="174" y2="90" stroke="${stroke}" stroke-width="0.5" opacity="0.4"/>` : '';
+
+  // Decoración final (etapa 5)
+  const deco = stage >= 5 ? `
+    <circle cx="120" cy="28" r="4" fill="var(--gold)" opacity="0.9"/>
+    <path d="M55 100 C 50 95, 45 100, 50 108" stroke="var(--sage)" stroke-width="1" fill="none"/>
+    <path d="M185 100 C 190 95, 195 100, 190 108" stroke="var(--sage)" stroke-width="1" fill="none"/>
+    <circle cx="51" cy="107" r="3" fill="var(--lily)" opacity="0.7"/>
+    <circle cx="189" cy="107" r="3" fill="var(--lily)" opacity="0.7"/>` : '';
+
+  // Brote inicial (solo en etapa 0)
+  const sprout = stage === 0 ? `
+    <line x1="120" y1="135" x2="120" y2="105" stroke="var(--sage)" stroke-width="2"/>
+    <circle cx="120" cy="102" r="5" fill="var(--night-2)" stroke="var(--lily)" stroke-width="1.5"/>` : '';
+
+  return `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" class="gdn-house-svg">
+    ${ground}
+    ${sprout}
+    ${foundation}
+    ${walls}
+    ${roofEl}
+    ${openings}
+    ${deco}
+  </svg>`;
+}
