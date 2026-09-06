@@ -1,0 +1,215 @@
+:root{
+  --night: #10132A;
+  --night-2: #1B1F44;
+  --violet: #262C56;
+  --gold: #C9A66B;
+  --lily: #F6F1E7;
+  --rose: #D98A94;
+  --sage: #7C9885;
+  --ink: #2A2440;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html,body{height:100%;}
+body{
+  background: var(--night);
+  color: var(--lily);
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 300;
+  overflow-x:hidden;
+}
+.serif{ font-family:'Cormorant Garamond', serif; }
+.eyebrow{
+  font-size:0.72rem;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color: var(--gold);
+  font-weight:500;
+}
+
+/* ---------- LOCK SCREEN ---------- */
+#lock{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding: 2rem 1.5rem;
+  background:
+    radial-gradient(ellipse at 50% 15%, rgba(201,166,107,0.10), transparent 55%),
+    radial-gradient(ellipse at 20% 80%, rgba(217,138,148,0.08), transparent 50%),
+    var(--night);
+  position:relative;
+}
+.stars{
+  position:absolute; inset:0;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(246,241,231,0.5), transparent),
+    radial-gradient(1px 1px at 80% 30%, rgba(246,241,231,0.4), transparent),
+    radial-gradient(1.5px 1.5px at 60% 70%, rgba(201,166,107,0.6), transparent),
+    radial-gradient(1px 1px at 30% 85%, rgba(246,241,231,0.35), transparent),
+    radial-gradient(1px 1px at 90% 80%, rgba(246,241,231,0.4), transparent),
+    radial-gradient(1.5px 1.5px at 45% 15%, rgba(246,241,231,0.5), transparent),
+    radial-gradient(1px 1px at 70% 55%, rgba(201,166,107,0.4), transparent);
+  background-size: 100% 100%;
+  pointer-events:none;
+  opacity:0.9;
+}
+#lily-svg{ width:150px; height:auto; margin-bottom: 1.75rem; position:relative; z-index:1; }
+.petal{ transform-origin: 100px 155px; transition: transform 1.4s ease; }
+h1.title{
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  font-weight:500;
+  font-style:italic;
+  margin: 0.4rem 0 0.6rem;
+  position:relative; z-index:1;
+}
+.subtitle{
+  max-width: 480px;
+  color: rgba(246,241,231,0.68);
+  font-size:0.95rem;
+  line-height:1.6;
+  margin-bottom: 2.4rem;
+  position:relative; z-index:1;
+}
+.countdown{
+  display:flex;
+  gap: clamp(0.8rem, 3vw, 2rem);
+  position:relative; z-index:1;
+}
+.cd-unit{ display:flex; flex-direction:column; align-items:center; min-width:64px; }
+.cd-num{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-weight:500;
+  color: var(--lily);
+  font-variant-numeric: tabular-nums;
+  line-height:1;
+}
+.cd-label{
+  font-size:0.62rem;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color: var(--gold);
+  margin-top:0.5rem;
+}
+.cd-sep{ font-size:1.6rem; color: rgba(246,241,231,0.25); align-self:flex-start; margin-top:0.4rem;}
+.lock-footer{
+  margin-top:3rem;
+  font-size:0.78rem;
+  color: rgba(246,241,231,0.4);
+  font-style:italic;
+  position:relative; z-index:1;
+}
+
+/* dev-only preview toggle (bórralo antes de enviar el regalo) */
+#devToggle{
+  position:fixed; bottom:14px; right:14px;
+  font-size:0.65rem; color:rgba(246,241,231,0.25);
+  background:none; border:1px solid rgba(246,241,231,0.2);
+  padding:5px 9px; border-radius:20px; cursor:pointer;
+  letter-spacing:0.05em; z-index:50;
+}
+#devToggle:hover{ color:var(--gold); border-color:var(--gold); }
+
+/* ---------- APP (post-unlock) ---------- */
+#app{ display:none; min-height:100vh; }
+nav.mainnav{
+  display:flex; justify-content:center; gap: clamp(1.2rem,4vw,2.6rem);
+  padding: 1.6rem 1rem 1.3rem;
+  border-bottom:1px solid rgba(246,241,231,0.1);
+  background: var(--night);
+  position:sticky; top:0; z-index:20;
+  flex-wrap:wrap;
+}
+nav.mainnav button{
+  background:none; border:none; cursor:pointer;
+  font-family:'Work Sans', sans-serif;
+  font-size:0.72rem; letter-spacing:0.22em; text-transform:uppercase;
+  color: rgba(246,241,231,0.55);
+  padding-bottom:6px;
+  border-bottom: 1px solid transparent;
+}
+nav.mainnav button.active, nav.mainnav button:hover{
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+section.view{ display:none; padding: 3rem 1.5rem 5rem; max-width: 760px; margin:0 auto; }
+section.view.active{ display:block; }
+.view h2{ font-family:'Cormorant Garamond', serif; font-style:italic; font-size:2.1rem; font-weight:500; margin-bottom:0.3rem; }
+.view .lede{ color:rgba(246,241,231,0.55); font-size:0.9rem; margin-bottom:2.6rem; }
+
+/* Diario */
+.diary-entry{ border-left:2px solid var(--rose); padding: 0.2rem 0 0.2rem 1.2rem; margin-bottom:2.2rem; }
+.diary-date{ font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); }
+.diary-entry h3{ font-family:'Cormorant Garamond', serif; font-weight:500; font-size:1.4rem; margin: 0.3rem 0 0.5rem; }
+.diary-entry p{ font-size:0.92rem; line-height:1.75; color:rgba(246,241,231,0.85); }
+
+/* Galería */
+.gallery-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:0.9rem; }
+.photo-slot{
+  aspect-ratio: 4/5; border-radius:4px;
+  background: linear-gradient(160deg, var(--violet), var(--night-2));
+  display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:0.8rem;
+  border:1px dashed rgba(201,166,107,0.35);
+  font-size:0.72rem; color:rgba(246,241,231,0.4); line-height:1.5;
+}
+.photo-slot img{ width:100%; height:100%; object-fit:cover; border-radius:4px; }
+.photo-slot.has-photo{ cursor:pointer; border:1px solid transparent; transition: transform 0.25s ease; }
+.photo-slot.has-photo:hover{ transform: scale(1.02); }
+
+/* Lightbox */
+#lightbox{
+  display:none;
+  position:fixed; inset:0; z-index:100;
+  background: rgba(16,19,42,0.94);
+  align-items:center; justify-content:center;
+  flex-direction:column;
+  padding: 2rem 1.5rem;
+  cursor: zoom-out;
+}
+#lightbox.active{ display:flex; }
+#lightbox-img{
+  max-width:min(90vw, 720px); max-height:75vh;
+  border-radius:6px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  cursor:default;
+}
+#lightbox-caption{
+  margin-top:1.2rem;
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic;
+  font-size:1.15rem;
+  color: var(--lily);
+  text-align:center;
+  max-width:640px;
+  cursor:default;
+}
+#lightbox-close{
+  position:absolute; top:20px; right:28px;
+  background:none; border:none;
+  color: var(--lily); font-size:2.2rem;
+  cursor:pointer; line-height:1;
+  opacity:0.7;
+}
+#lightbox-close:hover{ opacity:1; color:var(--gold); }
+
+/* Poemario */
+.poem-card{ margin-bottom:2.6rem; padding-bottom:2.4rem; border-bottom:1px solid rgba(246,241,231,0.08); }
+.poem-card:last-child{ border-bottom:none; }
+.poem-week{ font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--sage); }
+.poem-card h3{ font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:500; font-size:1.5rem; margin:0.35rem 0 0.9rem; }
+.poem-card .poem-text{ font-family:'Cormorant Garamond', serif; font-size:1.15rem; line-height:1.85; white-space:pre-line; color:rgba(246,241,231,0.9); }
+
+/* Libro */
+.book-chapter{ margin-bottom: 2.8rem; }
+.book-chapter .chnum{ font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); }
+.book-chapter h3{ font-family:'Cormorant Garamond', serif; font-weight:500; font-size:1.5rem; margin:0.3rem 0 0.9rem; }
+.book-chapter p{ font-size:0.95rem; line-height:1.8; color:rgba(246,241,231,0.85); margin-bottom:1rem; }
+
+.empty{ color:rgba(246,241,231,0.4); font-size:0.85rem; font-style:italic; }
+
+@media (prefers-reduced-motion: reduce){
+  .petal{ transition:none; }
+}

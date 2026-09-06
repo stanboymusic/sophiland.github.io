@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Sophia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ LOCK SCREEN ============ -->
+<div id="lock">
+  <div class="stars"></div>
+  <svg id="lily-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <line x1="100" y1="155" x2="100" y2="200" stroke="var(--sage)" stroke-width="2.5"/>
+    <path d="M100 195 C 85 185, 78 175, 82 165" stroke="var(--sage)" stroke-width="2" fill="none"/>
+    <path d="M100 190 C 115 180, 122 172, 118 163" stroke="var(--sage)" stroke-width="2" fill="none"/>
+    <g id="petals">
+      <path class="petal" data-i="0" d="M100 155 C 60 140, 55 70, 100 40 C 145 70, 140 140, 100 155 Z" fill="var(--night-2)" stroke="var(--lily)" stroke-width="1" opacity="0.95"/>
+      <path class="petal" data-i="1" d="M100 155 C 55 150, 30 110, 55 65 C 100 65, 120 110, 100 155 Z" fill="var(--night-2)" stroke="var(--lily)" stroke-width="1" opacity="0.9"/>
+      <path class="petal" data-i="2" d="M100 155 C 145 150, 170 110, 145 65 C 100 65, 80 110, 100 155 Z" fill="var(--night-2)" stroke="var(--lily)" stroke-width="1" opacity="0.9"/>
+      <path class="petal" data-i="3" d="M100 155 C 65 155, 45 130, 60 95 C 95 90, 110 125, 100 155 Z" fill="var(--night-2)" stroke="var(--lily)" stroke-width="1" opacity="0.85"/>
+      <path class="petal" data-i="4" d="M100 155 C 135 155, 155 130, 140 95 C 105 90, 90 125, 100 155 Z" fill="var(--night-2)" stroke="var(--lily)" stroke-width="1" opacity="0.85"/>
+    </g>
+    <circle cx="100" cy="140" r="5" fill="var(--gold)"/>
+  </svg>
+
+  <p class="eyebrow">Un lirio esperando su fecha</p>
+  <h1 class="title serif">Para ti, Sophia</h1>
+  <p class="subtitle">Esto se abre solo. Cuando llegue el momento, cada pétalo va a estar completamente abierto — como esto que siento y que llevo semanas guardando aquí, para ti.</p>
+
+  <div class="countdown">
+    <div class="cd-unit"><div class="cd-num" id="cd-days">--</div><div class="cd-label">Días</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><div class="cd-num" id="cd-hours">--</div><div class="cd-label">Horas</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><div class="cd-num" id="cd-min">--</div><div class="cd-label">Min</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><div class="cd-num" id="cd-sec">--</div><div class="cd-label">Seg</div></div>
+  </div>
+
+  <p class="lock-footer">21 de febrero, 12:00am — Venezuela</p>
+</div>
+
+<button id="devToggle" title="Solo para pruebas de Angel">vista previa (borrar antes de enviar)</button>
+
+<!-- ============ APP (desbloqueado) ============ -->
+<div id="app">
+  <nav class="mainnav">
+    <button data-view="diario" class="active">Diario</button>
+    <button data-view="galeria">Galería</button>
+    <button data-view="poemario">Poemario</button>
+    <button data-view="libro">Libro</button>
+  </nav>
+
+  <section class="view active" id="view-diario">
+    <p class="eyebrow serif" style="font-style:italic;">Sección 1</p>
+    <h2>Diario</h2>
+    <p class="lede">Pequeños momentos, contados apenas pasaron.</p>
+    <div id="diario-list"></div>
+  </section>
+
+  <section class="view" id="view-galeria">
+    <p class="eyebrow" style="font-style:italic;">Sección 2</p>
+    <h2>Galería</h2>
+    <p class="lede">Todo lo que nos hemos fotografiado, y lo que tú me has mandado.</p>
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </section>
+
+  <section class="view" id="view-poemario">
+    <p class="eyebrow" style="font-style:italic;">Sección 3</p>
+    <h2>Poemario</h2>
+    <p class="lede">Un poema por cada semana, desde que empecé a contar los días.</p>
+    <div id="poemario-list"></div>
+  </section>
+
+  <section class="view" id="view-libro">
+    <p class="eyebrow" style="font-style:italic;">Sección 4</p>
+    <h2>El libro</h2>
+    <p class="lede">La historia completa de por qué me cautivaste.</p>
+    <div id="libro-list"></div>
+  </section>
+</div>
+
+<!-- ============ LIGHTBOX (foto ampliada) ============ -->
+<div id="lightbox" onclick="closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()" aria-label="Cerrar">&times;</button>
+  <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
+  <p id="lightbox-caption" onclick="event.stopPropagation()"></p>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
