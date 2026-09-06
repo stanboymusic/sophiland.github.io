@@ -64,25 +64,25 @@ function renderOnboarding(gardenDoc) {
 
     <div class="gdn-onboard">
       <div class="gdn-lily-small">${lilySmallSVG(0)}</div>
-      <p class="eyebrow">Bienvenida al jardín</p>
+      <p class="eyebrow">Bienvenido/a al jardín</p>
       <h2 class="gdn-title serif">${gardenExists ? gardenDoc.gardenName : "Un jardín para dos"}</h2>
       <p class="gdn-sub">Antes de entrar, dinos quién eres.</p>
 
       <div class="gdn-role-btns">
-        <button class="gdn-role-btn" id="gdn-role-azuquita">
-          <span class="gdn-role-icon">🌿</span>
-          <span class="gdn-role-label">Soy <em>Azuquita</em></span>
-          <span class="gdn-role-hint">El jardinero</span>
-        </button>
         <button class="gdn-role-btn" id="gdn-role-sophia">
           <span class="gdn-role-icon">🌸</span>
-          <span class="gdn-role-label">Soy <em>${sophiaName || "nueva aquí"}</em></span>
-          <span class="gdn-role-hint">La dueña del jardín</span>
+          <span class="gdn-role-label">Soy <em>${sophiaName || "la dueña del jardín"}</em></span>
+          <span class="gdn-role-hint">Quiero entrar a regar</span>
+        </button>
+        <button class="gdn-role-btn" id="gdn-role-azuquita">
+          <span class="gdn-role-icon">👀</span>
+          <span class="gdn-role-label">Soy <em>Azuquita</em></span>
+          <span class="gdn-role-hint">Solo quiero mirar</span>
         </button>
       </div>
 
       ${!gardenExists ? `
-        <div class="gdn-garden-name-wrap" id="gdn-garden-name-section">
+        <div class="gdn-garden-name-wrap" id="gdn-garden-name-section" style="display:none">
           <label class="gdn-label" for="gdn-garden-name">Nombre del jardín</label>
           <input class="gdn-input" id="gdn-garden-name" type="text"
             placeholder="Ej: El jardín de los lirios" maxlength="50">
@@ -92,7 +92,11 @@ function renderOnboarding(gardenDoc) {
       <div id="gdn-sophia-name-wrap" class="gdn-sophia-name-wrap" style="display:none">
         <label class="gdn-label" for="gdn-sophia-name">¿Cómo quieres que te llamen en el jardín?</label>
         <input class="gdn-input" id="gdn-sophia-name" type="text"
-          placeholder="Tu nombre de jardinera…" maxlength="30">
+          placeholder="Tu nombre de jugadora…" maxlength="30">
+      </div>
+
+      <div id="gdn-azuquita-msg" style="display:none; color:rgba(246,241,231,0.6); font-size:0.85rem; margin-top:0.5rem">
+        ${!gardenExists ? "Sophia todavía no ha plantado nada aquí. Vuelve cuando ella haya creado el jardín." : "Entrarás en modo espectador (solo lectura)."}
       </div>
 
       <button class="gdn-primary-btn" id="gdn-confirm-btn" disabled>Entrar al jardín →</button>
@@ -107,19 +111,27 @@ function renderOnboarding(gardenDoc) {
 
   function updateConfirmBtn() {
     const btn       = document.getElementById("gdn-confirm-btn");
-    const nameInput = document.getElementById("gdn-garden-name");
-    const sophiaInput = document.getElementById("gdn-sophia-name");
-    const gardenNameOk = gardenExists || (nameInput && nameInput.value.trim().length > 0);
-    const sophiaNameOk = selectedRole !== "sophia" || (sophiaInput && sophiaInput.value.trim().length > 0) || !!sophiaName;
-    btn.disabled = !selectedRole || !gardenNameOk || !sophiaNameOk;
+    if (selectedRole === "azuquita") {
+      btn.disabled = !gardenExists; // Si no existe, azuquita no puede entrar a crearlo
+    } else {
+      const nameInput = document.getElementById("gdn-garden-name");
+      const sophiaInput = document.getElementById("gdn-sophia-name");
+      const gardenNameOk = gardenExists || (nameInput && nameInput.value.trim().length > 0);
+      const sophiaNameOk = (sophiaInput && sophiaInput.value.trim().length > 0) || !!sophiaName;
+      btn.disabled = !selectedRole || !gardenNameOk || !sophiaNameOk;
+    }
   }
 
   document.getElementById("gdn-role-azuquita").addEventListener("click", () => {
     selectedRole = "azuquita";
     document.querySelectorAll(".gdn-role-btn").forEach(b => b.classList.remove("selected"));
     document.getElementById("gdn-role-azuquita").classList.add("selected");
-    const sophiaWrap = document.getElementById("gdn-sophia-name-wrap");
-    sophiaWrap.style.display = "none";
+    
+    document.getElementById("gdn-sophia-name-wrap").style.display = "none";
+    if (document.getElementById("gdn-garden-name-section")) {
+      document.getElementById("gdn-garden-name-section").style.display = "none";
+    }
+    document.getElementById("gdn-azuquita-msg").style.display = "block";
     updateConfirmBtn();
   });
 
@@ -127,7 +139,11 @@ function renderOnboarding(gardenDoc) {
     selectedRole = "sophia";
     document.querySelectorAll(".gdn-role-btn").forEach(b => b.classList.remove("selected"));
     document.getElementById("gdn-role-sophia").classList.add("selected");
-    // Solo pedir nombre si no existe todavía
+    
+    document.getElementById("gdn-azuquita-msg").style.display = "none";
+    if (document.getElementById("gdn-garden-name-section")) {
+      document.getElementById("gdn-garden-name-section").style.display = "block";
+    }
     const sophiaWrap = document.getElementById("gdn-sophia-name-wrap");
     sophiaWrap.style.display = sophiaName ? "none" : "block";
     updateConfirmBtn();
@@ -145,7 +161,7 @@ function renderOnboarding(gardenDoc) {
 
     try {
       let finalDoc = gardenDoc;
-      if (!gardenExists) {
+      if (!gardenExists && selectedRole === "sophia") {
         finalDoc = await createGarden({
           gardenName: gardenNameInput,
           sophiaName: sophiaInput,
@@ -198,38 +214,40 @@ async function renderGardenView(gardenDoc, role, name) {
           <span class="gdn-stat-label">Semillas ✨</span>
         </div>
         <div class="gdn-stat">
-          <span class="gdn-stat-num">${(gardenDoc.waterCount?.azuquita || 0) + (gardenDoc.waterCount?.sophia || 0)}</span>
+          <span class="gdn-stat-num">${gardenDoc.waterCount || 0}</span>
           <span class="gdn-stat-label">Riegos</span>
         </div>
       </div>
 
-      <!-- Botón de riego -->
+      <!-- Botón de riego (Solo para Sophia) -->
+      ${role === 'sophia' ? `
       <div class="gdn-water-section">
         ${canWater
-          ? `<button class="gdn-water-btn" id="gdn-water-btn">
+          ? \`<button class="gdn-water-btn" id="gdn-water-btn">
                <span class="gdn-water-icon">💧</span> Regar el jardín
-             </button>`
-          : `<div class="gdn-already-watered">
+             </button>\`
+          : \`<div class="gdn-already-watered">
                <span>🌙</span>
                <p>Ya regaste hoy.<br><em>Vuelve mañana.</em></p>
-             </div>`
+             </div>\`
         }
       </div>
+      ` : ''}
 
       <!-- Mensaje al jardinero -->
       <div class="gdn-message-section">
         <p class="eyebrow" style="margin-bottom:0.8rem">Libreta del jardinero</p>
-        ${canPost
-          ? `<div class="gdn-msg-compose">
+        ${role === 'sophia' ? (canPost
+          ? \`<div class="gdn-msg-compose">
                <textarea class="gdn-textarea" id="gdn-msg-text"
-                 placeholder="Deja algo escrito en el jardín hoy…"
+                 placeholder="Deja algo escrito para Azuquita hoy…"
                  maxlength="400" rows="3"></textarea>
                <button class="gdn-msg-send-btn" id="gdn-msg-send">
                  Dejar nota 🌿
                </button>
-             </div>`
-          : `<p class="gdn-already-msg">Ya dejaste tu nota de hoy. <em>Hasta mañana.</em></p>`
-        }
+             </div>\`
+          : \`<p class="gdn-already-msg">Ya dejaste tu nota de hoy. <em>Hasta mañana.</em></p>\`
+        ) : ""}
 
         <div class="gdn-msg-list" id="gdn-msg-list">
           ${renderMessages(messages)}

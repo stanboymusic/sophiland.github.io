@@ -71,8 +71,8 @@ export async function createGarden({ gardenName, sophiaName }) {
     totalResources: 0,
     streak:         0,
     growthStage:    0,
-    waterCount:     { azuquita: 0, sophia: 0 },
-    lastWateredDate: { azuquita: null, sophia: null },
+    waterCount:     0,
+    lastWateredDate: null,
   };
   await setDoc(GARDEN_DOC(), initial);
   return initial;
@@ -80,48 +80,47 @@ export async function createGarden({ gardenName, sophiaName }) {
 
 export function canWaterToday(role, gardenDoc) {
   if (!gardenDoc) return false;
-  const last = gardenDoc.lastWateredDate?.[role];
+  if (role !== "sophia") return false; // Azuquita no riega
+  const last = gardenDoc.lastWateredDate;
   return last !== todayVE();
 }
 
 export async function waterGarden(role) {
+  if (role !== "sophia") throw new Error("Solo Sophia puede regar.");
+
   const snap = await getDoc(GARDEN_DOC());
   if (!snap.exists()) throw new Error("El jardín no existe todavía.");
 
   const g      = snap.data();
   const today  = todayVE();
-  const other  = role === "azuquita" ? "sophia" : "azuquita";
 
-  if (g.lastWateredDate?.[role] === today) {
+  if (g.lastWateredDate === today) {
     throw new Error("ya_riego"); // señal controlada
   }
 
   // Semillas de luz: +5 base
   const seedsEarned = 5;
 
-  // Calcular streak: ambos regaron hoy?
-  const otherWateredToday = g.lastWateredDate?.[other] === today;
-  const newStreak = otherWateredToday ? (g.streak || 0) + 1 : g.streak || 0;
+  // Calcular streak: días consecutivos
+  let newStreak = 1;
+  if (g.lastWateredDate) {
+    const lastDate = new Date(g.lastWateredDate + "T00:00:00Z");
+    const currDate = new Date(today + "T00:00:00Z");
+    const diffDays = Math.floor((currDate - lastDate) / (1000 * 60 * 60 * 24));
+    if (diffDays === 1) {
+      newStreak = (g.streak || 0) + 1;
+    }
+  }
 
   // WaterCount
-  const newWaterCount = {
-    ...g.waterCount,
-    [role]: (g.waterCount?.[role] || 0) + 1,
-  };
+  const newWaterCount = (g.waterCount || 0) + 1;
 
   // GrowthStage: sube cada 5 riegos totales (máx 5)
-  const totalWaters = (newWaterCount.azuquita || 0) + (newWaterCount.sophia || 0);
-  const newGrowthStage = Math.min(5, Math.floor(totalWaters / 5));
-
-  // LastWateredDate
-  const newLastWateredDate = {
-    ...g.lastWateredDate,
-    [role]: today,
-  };
+  const newGrowthStage = Math.min(5, Math.floor(newWaterCount / 5));
 
   await updateDoc(GARDEN_DOC(), {
-    [`waterCount.${role}`]:         newWaterCount[role],
-    [`lastWateredDate.${role}`]:    today,
+    waterCount:                     newWaterCount,
+    lastWateredDate:                today,
     totalResources:                 (g.totalResources || 0) + seedsEarned,
     streak:                         newStreak,
     growthStage:                    newGrowthStage,
@@ -132,12 +131,12 @@ export async function waterGarden(role) {
     newStreak,
     newGrowthStage,
     totalResources: (g.totalResources || 0) + seedsEarned,
-    bothWateredToday: otherWateredToday,
   };
 }
 
 // ── Firestore: mensajes ─────────────────────────────────
 export async function canPostToday(role) {
+  if (role !== "sophia") return false;
   const today = todayVE();
   const q     = query(
     collection(db, "mensajes"),
@@ -145,7 +144,7 @@ export async function canPostToday(role) {
     limit(50)
   );
   const snap = await getDocs(q);
-  return !snap.docs.some(d => d.data().authorRole === role && d.data().date === today);
+  return !snap.docs.some(d => d.data().date === today);
 }
 
 export async function postMessage(role, authorName, text) {
