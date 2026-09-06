@@ -747,3 +747,111 @@ section.view.active{ display:block; }
   line-height: 1.65;
 }
 
+/* ================================================================
+   NUESTRO REFUGIO — sección de mascotas
+   ================================================================ */
+
+.gdn-pets-section{
+  border-top: 1px solid rgba(246,241,231,0.08);
+  padding-top: 1.5rem;
+  display: flex; flex-direction: column; gap: 0.8rem;
+}
+
+/* Grid de tarjetas */
+.gdn-pet-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+}
+@media (max-width: 360px){
+  .gdn-pet-grid{ grid-template-columns: 1fr; }
+}
+
+/* Tarjeta individual */
+.gdn-pet-card{
+  background: rgba(16,19,42,0.5);
+  border: 1px solid rgba(246,241,231,0.1);
+  border-radius: 12px;
+  padding: 1rem 0.8rem;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 0.4rem;
+  text-align: center;
+  transition: border-color 0.3s ease;
+}
+.gdn-pet-card.adopted{
+  border-color: rgba(201,166,107,0.35);
+  background: rgba(201,166,107,0.06);
+}
+
+/* Emoji de la mascota */
+.gdn-pet-emoji{
+  font-size: 2rem;
+  line-height: 1;
+}
+
+/* Nombre de la especie */
+.gdn-pet-label{
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.72rem; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(246,241,231,0.5);
+  margin: 0;
+}
+.gdn-pet-card.adopted .gdn-pet-label{
+  color: rgba(246,241,231,0.7);
+}
+
+/* Área de acción */
+.gdn-pet-action{
+  display: flex; flex-direction: column;
+  align-items: center; gap: 0.3rem;
+  margin-top: 0.2rem;
+}
+
+/* Badge "adoptado ✓" */
+.gdn-pet-adopted-badge{
+  font-size: 0.65rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--sage);
+}
+
+/* Nombre propio de la mascota */
+.gdn-pet-name{
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem; font-style: italic;
+  color: var(--lily);
+}
+.gdn-pet-nameless{
+  font-size: 0.68rem; color: rgba(246,241,231,0.25);
+  font-style: italic;
+}
+.gdn-pet-pending{
+  font-size: 0.68rem; color: rgba(246,241,231,0.2);
+  font-style: italic;
+}
+
+/* Botón adoptar (hereda .gdn-build-btn pero más compacto) */
+.gdn-adopt-btn{
+  background: linear-gradient(135deg, rgba(124,152,133,0.18), rgba(124,152,133,0.06));
+  border: 1px solid rgba(124,152,133,0.45);
+  color: var(--sage);
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.68rem; letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.9rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease;
+  display: flex; align-items: center; gap: 0.3rem;
+  white-space: nowrap;
+}
+.gdn-adopt-btn:hover:not(:disabled){
+  background: linear-gradient(135deg, rgba(124,152,133,0.32), rgba(124,152,133,0.12));
+  transform: scale(1.04);
+}
+.gdn-adopt-btn:disabled{
+  opacity: 0.4; cursor: not-allowed; transform: none;
+  border-color: rgba(246,241,231,0.12);
+  color: rgba(246,241,231,0.3);
+}
+
+

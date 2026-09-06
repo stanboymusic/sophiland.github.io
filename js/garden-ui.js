@@ -10,6 +10,7 @@ import {
   canWaterToday, waterGarden,
   canPostToday, postMessage, getMessages,
   HOUSE_STAGES, buildNextStage, setHouseName,
+  PET_TYPES, adoptPet, setPetName,
 } from "./garden.js";
 
 // ── Referencias al DOM ──────────────────────────────────
@@ -258,6 +259,9 @@ async function renderGardenView(gardenDoc, role, name) {
       <!-- Nuestra casa -->
       ${renderHouseSection(gardenDoc, role)}
 
+      <!-- Nuestro refugio (mascotas) -->
+      ${renderPetsSection(gardenDoc, role)}
+
     </div>
   `;
 
@@ -347,6 +351,33 @@ async function renderGardenView(gardenDoc, role, name) {
   if (nameHouseBtn) {
     nameHouseBtn.addEventListener("click", () => renderHouseNameModal(gardenDoc, role, name));
   }
+
+  // Eventos de adoptar mascotas
+  document.querySelectorAll(".gdn-adopt-btn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const petKey = btn.dataset.petKey;
+      btn.disabled = true;
+      btn.textContent = "Adoptando…";
+      try {
+        const result = await adoptPet(role, petKey);
+        const updatedDoc = await getOrCreateGardenDoc();
+        renderGardenView(updatedDoc, role, name);
+      } catch (err) {
+        console.error(err);
+        btn.disabled = false;
+        btn.textContent = "Adoptar";
+      }
+    });
+  });
+
+  // Eventos de nombrar mascota (botón inline)
+  document.querySelectorAll(".gdn-name-pet-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const petKey   = btn.dataset.petKey;
+      const petLabel = btn.dataset.petLabel;
+      renderPetNameModal(gardenDoc, role, name, petKey, petLabel);
+    });
+  });
 }
 
 // ── Animación de riego ─────────────────────────────────────
@@ -638,3 +669,124 @@ function houseSVG(stage) {
     ${deco}
   </svg>`;
 }
+
+// ── Sección de mascotas (render) ───────────────────────
+function renderPetsSection(gardenDoc, role) {
+  const houseStage = gardenDoc.houseStage || 0;
+
+  // Solo visible si la casa está completa
+  if (houseStage < HOUSE_STAGES.length) return '';
+
+  const pets      = gardenDoc.pets || {};
+  const resources = gardenDoc.totalResources || 0;
+
+  const cards = PET_TYPES.map(pet => {
+    const petData  = pets[pet.key] || { adopted: false, name: null };
+    const adopted  = petData.adopted;
+    const petName  = petData.name || null;
+
+    let actionHTML = '';
+    if (adopted) {
+      // Tiene nombre → mostrarlo; sin nombre y es sophia → botón inline
+      const nameTag = petName
+        ? `<span class="gdn-pet-name">${escHtml(petName)}</span>`
+        : (role === 'sophia'
+            ? `<button class="gdn-inline-btn gdn-name-pet-btn"
+                 data-pet-key="${pet.key}" data-pet-label="${pet.label}">
+                 ponerle nombre
+               </button>`
+            : `<span class="gdn-pet-nameless">sin nombre aún</span>`);
+      actionHTML = `
+        <div class="gdn-pet-adopted-badge">adoptado ✓</div>
+        ${nameTag}`;
+    } else if (role === 'sophia') {
+      const canAfford = resources >= pet.cost;
+      const missing   = pet.cost - resources;
+      actionHTML = `
+        <button class="gdn-adopt-btn" data-pet-key="${pet.key}"
+          ${canAfford ? '' : 'disabled'}>
+          ${canAfford
+            ? `Adoptar <span class="gdn-build-cost">${pet.cost}</span> ✨`
+            : `Faltan <span class="gdn-build-cost">${missing}</span> semillas`}
+        </button>`;
+    } else {
+      // Azuquita, no adoptada
+      actionHTML = `<span class="gdn-pet-pending">no adoptado todavía</span>`;
+    }
+
+    return `
+      <div class="gdn-pet-card ${adopted ? 'adopted' : ''}">
+        <div class="gdn-pet-emoji">${pet.emoji}</div>
+        <p class="gdn-pet-label">${pet.label}</p>
+        <div class="gdn-pet-action">${actionHTML}</div>
+      </div>`;
+  }).join('');
+
+  return `
+    <div class="gdn-pets-section">
+      <p class="eyebrow" style="margin-bottom:0.8rem">Nuestro refugio</p>
+      <p class="gdn-house-hint" style="margin-bottom:1.2rem">
+        Un lugar para los que llegarán a vivir con nosotros.
+      </p>
+      <div class="gdn-pet-grid">
+        ${cards}
+      </div>
+    </div>`;
+}
+
+// ── Modal para nombrar una mascota ─────────────────────
+function renderPetNameModal(gardenDoc, role, name, petKey, petLabel) {
+  modalInner().innerHTML = `
+    <div class="gdn-onboard" style="text-align:center">
+      <div style="font-size:2.6rem; margin-bottom:0.5rem">
+        ${PET_TYPES.find(p => p.key === petKey)?.emoji || '🐾'}
+      </div>
+      <p class="eyebrow">${escHtml(petLabel)}</p>
+      <h2 class="gdn-title serif">¿Cómo se llamará?</h2>
+      <p class="gdn-sub" style="max-width:300px;margin:0 auto">
+        El nombre que le pongas quedará en el refugio para siempre.
+      </p>
+      <div class="gdn-garden-name-wrap" style="margin-top:1.5rem">
+        <label class="gdn-label" for="gdn-pet-name-input">Nombre</label>
+        <input class="gdn-input" id="gdn-pet-name-input" type="text"
+          placeholder="Ej: Canela, Mochi, Luna…" maxlength="30">
+      </div>
+      <div style="display:flex; gap:0.8rem; justify-content:center; margin-top:1.2rem">
+        <button class="gdn-primary-btn" id="gdn-save-pet-name" disabled>
+          Guardar nombre
+        </button>
+        <button class="gdn-msg-send-btn" id="gdn-skip-pet-name">
+          Dejarlo sin nombre
+        </button>
+      </div>
+    </div>
+  `;
+
+  const input   = document.getElementById("gdn-pet-name-input");
+  const saveBtn = document.getElementById("gdn-save-pet-name");
+  const skipBtn = document.getElementById("gdn-skip-pet-name");
+
+  input.addEventListener("input", () => {
+    saveBtn.disabled = input.value.trim().length === 0;
+  });
+
+  saveBtn.addEventListener("click", async () => {
+    saveBtn.disabled = true;
+    saveBtn.textContent = "Guardando…";
+    try {
+      await setPetName(role, petKey, input.value.trim());
+      const updatedDoc = await getOrCreateGardenDoc();
+      renderGardenView(updatedDoc, role, name);
+    } catch (err) {
+      console.error(err);
+      saveBtn.disabled = false;
+      saveBtn.textContent = "Guardar nombre";
+    }
+  });
+
+  skipBtn.addEventListener("click", async () => {
+    const updatedDoc = await getOrCreateGardenDoc();
+    renderGardenView(updatedDoc, role, name);
+  });
+}
+

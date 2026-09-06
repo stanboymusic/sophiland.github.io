@@ -77,6 +77,13 @@ export async function createGarden({ gardenName, sophiaName }) {
     houseUnlocked:   false,
     houseStage:      0,
     houseName:       null,
+    // Mascotas
+    pets: {
+      boyeroBerna:     { adopted: false, name: null },
+      mapache:         { adopted: false, name: null },
+      goldenRetriever: { adopted: false, name: null },
+      husky:           { adopted: false, name: null },
+    },
   };
   await setDoc(GARDEN_DOC(), initial);
   return initial;
@@ -220,4 +227,61 @@ export async function buildNextStage(role) {
 export async function setHouseName(role, name) {
   if (role !== "sophia") throw new Error("Solo Sophia puede nombrar la casa.");
   await updateDoc(GARDEN_DOC(), { houseName: name.trim().slice(0, 50) });
+}
+
+// ── Firestore: mascotas ─────────────────────────────
+export const PET_TYPES = [
+  { key: "boyeroBerna",     label: "Boyero de Berna",  emoji: "🐕", cost: 60 },
+  { key: "mapache",         label: "Mapache",           emoji: "🦝", cost: 60 },
+  { key: "goldenRetriever", label: "Golden Retriever",  emoji: "🐶", cost: 60 },
+  { key: "husky",           label: "Husky",             emoji: "🐺", cost: 60 },
+];
+
+/**
+ * Adopta una mascota.
+ * Retorna { ok: true } si éxito.
+ * Retorna { ok: false, missing } si no alcanzan las semillas.
+ * Retorna { ok: false, alreadyAdopted: true } si ya estaba adoptada.
+ */
+export async function adoptPet(role, petKey) {
+  if (role !== "sophia") throw new Error("Solo Sophia puede adoptar mascotas.");
+
+  const snap = await getDoc(GARDEN_DOC());
+  if (!snap.exists()) throw new Error("El jardín no existe todavía.");
+
+  const g    = snap.data();
+  const pets = g.pets || {};
+
+  if (pets[petKey]?.adopted) {
+    return { ok: false, alreadyAdopted: true };
+  }
+
+  const petType  = PET_TYPES.find(p => p.key === petKey);
+  if (!petType) throw new Error(`Mascota desconocida: ${petKey}`);
+
+  const resources = g.totalResources || 0;
+  if (resources < petType.cost) {
+    return { ok: false, missing: petType.cost - resources };
+  }
+
+  await updateDoc(GARDEN_DOC(), {
+    [`pets.${petKey}.adopted`]: true,
+    totalResources: resources - petType.cost,
+  });
+
+  return { ok: true };
+}
+
+export async function setPetName(role, petKey, name) {
+  if (role !== "sophia") throw new Error("Solo Sophia puede nombrar mascotas.");
+
+  const snap = await getDoc(GARDEN_DOC());
+  if (!snap.exists()) throw new Error("El jardín no existe todavía.");
+
+  const g = snap.data();
+  if (!g.pets?.[petKey]?.adopted) throw new Error("Esa mascota aún no ha sido adoptada.");
+
+  await updateDoc(GARDEN_DOC(), {
+    [`pets.${petKey}.name`]: name.trim().slice(0, 30),
+  });
 }
