@@ -110,6 +110,50 @@ y que hay sonrisas que no se olvidan
 aunque uno se pase la vida entera
 tratando de dibujarlas de memoria.`
   },
+  {
+    week: 3,
+    range: "6 sep – 13 sep, 2026",
+    title: "OJOS TUYOS, ADICCION MIA",
+    text: `Me preguntaste qué veía en tus ojos
+y yo vi dos ventanas abiertas en plena tormenta,
+un alma que decidió no cerrar las cortinas
+aunque afuera lloviera fuerte.
+
+Te dije que ahí quería quedarme
+y tú me respondiste con un incendio disfrazado de voz,
+un "te detesto" que en realidad era una hoguera
+queriendo abrazarme sin quemarme del todo.
+
+Me llevaste a tu templo,
+al único lugar donde tu alma reza sin miedo,
+y yo llegué tarde, como llega la lluvia
+que promete y se toma su tiempo en caer.
+
+Me esperaste como se espera un milagro:
+sin saber si va a llegar, pero sin moverse del sitio,
+y cuando bajaste de ese bus
+tu cara era mar en calma después de la tormenta.
+
+Me abrazaste y el mundo se quedó quieto,
+te volviste sueño, te volviste orilla,
+el lugar donde un barco cansado
+por fin suelta el ancla.
+
+Dijiste que soy un remolino en tu cabeza.
+Yo te dije que no vine a calmar tormentas,
+vine a nadar dentro de ellas contigo,
+a hacerte compañía en cada vuelta.
+
+Me confesaste que me viste una vez
+y algo en ti empezó a caminar hacia mí,
+despacio, como quien se acerca a una vela encendida
+sin querer apagarla con la prisa.
+
+Ahora persigo contigo los mismos misterios,
+evito enseñarte el miedo porque sé que en ti se vuelve lágrima,
+y entiendo que estoy construyendo, sin darme cuenta,
+un refugio con tu nombre en la entrada.`
+  },
 ];
 
 // --- LIBRO: capítulos, los que quieras ---
