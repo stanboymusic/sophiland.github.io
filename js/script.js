@@ -6,6 +6,8 @@ import { loadContent } from './firebase.js';
 
 function pad(n){ return String(n).padStart(2,'0'); }
 
+let currentGalleryPhotos = [];
+
 function updateCountdown(){
   const now = new Date();
   const diff = TARGET_DATE - now;
@@ -52,6 +54,7 @@ async function unlock(){
 }
 
 function renderAll({ diaryEntries, galleryPhotos, poems, bookChapters } = {}){
+  currentGalleryPhotos = galleryPhotos || [];
   const diarioEl = document.getElementById('diario-list');
   diarioEl.innerHTML = diaryEntries.length ? diaryEntries.map(e => `
     <div class="diary-entry">
@@ -111,7 +114,7 @@ function initPoemAccordion(){
 
 /* ---------- LIGHTBOX (foto ampliada) ---------- */
 function openLightbox(index){
-  const p = galleryPhotos[index];
+  const p = currentGalleryPhotos[index];
   if (!p || !p.src) return;
   document.getElementById('lightbox-img').src = p.src;
   document.getElementById('lightbox-caption').textContent = p.caption || '';
@@ -122,6 +125,9 @@ function closeLightbox(){
   document.getElementById('lightbox').classList.remove('active');
   document.body.style.overflow = '';
 }
+
+window.openLightbox = openLightbox;
+window.closeLightbox = closeLightbox;
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeLightbox();
 });
