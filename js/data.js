@@ -45,6 +45,8 @@ window._localGallery = [
   { src: "assets/fotos/s5.jpg", caption: "29-08-26, y la queso x2" },
   { src: "assets/fotos/s6.jpg", caption: "29-08-26, despues del musical <3" },
   { src: "assets/fotos/s7.jpg", caption: "03-09-26, comiendo en el mc donald" },
+  { src: "assets/fotos/s8.jpg", caption: "10-09-26, me invitaste al culto conntigo <3 " },
+  { src: "assets/fotos/s9.jpg", caption: "PERO QUE VEN MIS OJOSSSSSSSS, MUACKKKK <3" },
   // { src: "assets/fotos/playa.jpg", caption: "Nuestra primera salida" },
 ];
 
