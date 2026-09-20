@@ -28,7 +28,15 @@ window._localDiary = [
   { date: "29 ago 2026", title: "PRIMERA CITA", text: "hay sonrisas que solo mueven los labios, y hay otras que mueven el aire completo de una habitación. ya tomé una decisión, y usted será mi mujer" },
   { date: "3 sep 2026", title: "salimos al metropolitano", text: "fue un dia muy hermoso, esa pancarta me encantó. " },
   { date: "3 sep 2026", title: "respiradero muy peculiar", text: "tu explicabas seriamente como respirar correctamente para trotar, y yo dije que respiraba por el ano JAJAJAJJKAKAJAKAKAAJ" },
-
+  { date: "8 sep 2026", title: "¿Que ves en mis ojos?", text: "Veo el reflejo de todo lo que me haces sentir... veo esos ojos que debaten como si fueran dioses griegos y que aun así, cuando me miran a mí, se suavizan. Ahí veo mi lugar favorito." },
+  { date: "10 sep 2026", title: "un invitado especial", text: "me invitaste a conocer una parte muy importante de tu vida, tu ministerio" },
+  { date: "10 sep 2026", title: "1 hora y media en el terminal", text: "me miraste con una cara de amor al bajar del bus.... JAJAJAJAJAJ" },
+  { date: "14 sep 2026", title: "una salida para sentirte mejor", text: "hablaste hasta por los hp codos ese dia JAJAJAAJAJAJJJ. yo no pude soportar escucharte asustada y llorando el dia anterior por culpa del idiota ese." },
+  { date: "14 sep 2026", title: "pan de guayaba", text: "fuimos a comer pan de guayaba porque dijiste que te gustaba" },
+  { date: "14 sep 2026", title: "un perro muy extraño", text: "al final de la tarde un perro quiso montarte JAJAJJAJJAJAJAJJ fue demasiado gracioso" },
+  { date: "14 sep 2026", title: "accidente en vivo", text: "un motociclista se cayo de su moto mientras estabamos en  la plaza" },
+  { date: "18 sep 2026", title: "chichis", text: "me encantan tus tetas." },
+  { date: "19 sep 2026", title: "mis dos amigas", text: "me encantan tus tetas x2" },
   // { date: "27 ago 2026", title: "...", text: "..." },
 ];
 
@@ -141,7 +149,7 @@ te volviste sueño, te volviste orilla,
 el lugar donde un barco cansado
 por fin suelta el ancla.
 
-Dijiste que soy un remolino en tu cabeza.
+Dijiste que hay un remolino en tu cabeza.
 Yo te dije que no vine a calmar tormentas,
 vine a nadar dentro de ellas contigo,
 a hacerte compañía en cada vuelta.
@@ -155,6 +163,40 @@ Ahora persigo contigo los mismos misterios,
 evito enseñarte el miedo porque sé que en ti se vuelve lágrima,
 y entiendo que estoy construyendo, sin darme cuenta,
 un refugio con tu nombre en la entrada.`
+  },
+  {
+    week: 4,
+    range: "13 sep – 20 sep, 2026",
+    title: "GRAVEDAD",
+    text: `Hay astros que no se buscan, se descubren
+por la forma en que doblan la luz de los demás.
+Tú llegaste así, sin ruido,
+y todo lo que yo era empezó a inclinarse hacia ti.
+
+Abriste tu universo como quien abre una ventana
+después de un invierno demasiado largo,
+soltaste el humo de las noches viejas,
+y yo fui el cielo que te recibió sin preguntar por qué.
+
+Me regalaste el mapa de tus primeras estrellas,
+esa luz pequeña que todavía viaja desde ti,
+y me enseñaste que la noche tiene gramática
+y que cada silencio es una nota esperando su turno.
+
+Dos hemisferios distintos se descubrieron
+girando hacia el mismo centro:
+lo que en ti era océano en mí era costa,
+y la marea aprendió el nombre de los dos.
+
+La semana se fue, pero tu gravedad se quedó.
+Sigo cayendo, feliz, hacia tu órbita,
+sabiendo que hay puertas nuevas en el horizonte
+y que las estás tocando con la punta de los dedos.
+
+Si el amor es un eclipse, que sea largo,
+que el día aprenda a llamarse noche contigo,
+y que tú seas la única ley
+que obedezco con gusto hasta el final de mi caída.`
   },
 ];
 
