@@ -55,6 +55,18 @@ window._localGallery = [
   { src: "assets/fotos/s7.jpg", caption: "03-09-26, comiendo en el mc donald" },
   { src: "assets/fotos/s8.jpg", caption: "10-09-26, me invitaste al culto conntigo <3 " },
   { src: "assets/fotos/s9.jpg", caption: "PERO QUE VEN MIS OJOSSSSSSSS, MUACKKKK <3" },
+  { src: "assets/fotos/s10.jpg", caption: "20-09-26, me encantas toditaaaaa" },
+  { src: "assets/fotos/s11.jpg", caption: " muackk" },
+  { src: "assets/fotos/s12.jpg", caption: "2-10-26, mi mujer feliz por cumplir un sueño de sophi pequeña" },
+  { src: "assets/fotos/s13.jpg", caption: "04-10-26, antes de ser consumida por el señor de la nocheee " },
+  { src: "assets/fotos/s14.jpg", caption: "04-10-26, wazaaaaaaa " },
+  { src: "assets/fotos/s15.jpg", caption: "02-10-26, mi niña llorando en el concierto de los biti" },
+  { src: "assets/fotos/s16.jpg", caption: "05-10-26, jaskajs nuestros hijos seran preciososssss" },
+  { src: "assets/fotos/s17.jpg", caption: "02-10-26, una foto que me encanto mushop" },
+  { src: "assets/fotos/s18.jpg", caption: "02-10-26,ella probando unos chocolatesss " },
+  { src: "assets/fotos/s19.jpg", caption: "02-10-26, no necesita descripcion " },
+  { src: "assets/fotos/s20.jpg", caption: "02-10-26, no necesita descripcion x2 " },
+
   // { src: "assets/fotos/playa.jpg", caption: "Nuestra primera salida" },
 ];
 
@@ -197,6 +209,119 @@ Si el amor es un eclipse, que sea largo,
 que el día aprenda a llamarse noche contigo,
 y que tú seas la única ley
 que obedezco con gusto hasta el final de mi caída.`
+  },
+  {
+    week: 5,
+    range: "20 sep – 27 sep, 2026",
+    title: "Crepúsculo de otoño",
+    text: `Dicen que los ojos son ventanas,
+y tú dejaste la tuya abierta de par en par,
+me dejaste entrar sin tocar,
+y luego la cerraste por dentro
+y me pusiste la llave en la mano.
+
+Hay un sueño que no me cuentas.
+Lo guardas como se guarda una brasa en la palma:
+te sonrojas hacia adentro, donde el color no se ve,
+y yo, que aprendí a leer el calor de lo que callas,
+no pregunto, pero lo escucho arder.
+
+Tú, que tienes por costumbre rendirte al dulce,
+confiesas que hubo uno que llegó sin pedir permiso
+y se sentó, en tiempo récord, primero en tu lista.
+Que se avergüence el azúcar.
+
+Mientras el otoño se sienta al piano
+y el crepúsculo le tiembla en las teclas,
+la fiebre me dibuja un mapa de cuchillos,
+y yo te pienso,
+y el mapa se vuelve río,
+y el río me lleva a ti.
+
+Después la madrugada:
+dos faros en cuartos distintos
+leyéndose la misma luz,
+riendo solos, como locos bendecidos.
+
+Y el jueves tomaste una canción
+y no me la dedicaste.
+Hiciste algo peor, algo mejor:
+la volviste yo.`
+  },
+  {
+    week: 6,
+    range: "27 sep – 4 oct, 2026",
+    title: "Hilo rojo",
+    text: `Anoche el sueño me llevó a una casa
+con montañas por paredes
+y un horizonte que no pedía permiso.
+Había un perro de oro a mis pies,
+un oso suave de Berna recién llegado a tu regazo,
+y tú, de pronto, sin aviso,
+volteaste el rostro y dijiste te amo
+como quien deja caer una moneda en un pozo
+para ver cuánto tarda el eco en volver.
+
+Todavía me duele despertar.
+Hay amaneceres que son una puerta cerrada
+con la casa entera adentro.
+
+Tú, por tu parte, me bailabas descalza
+en un salón sin techo,
+con los pies escribiendo en el suelo
+lo que tu boca no se atreve a firmar.
+
+Y de madrugada, tarde ya para el sueño,
+me hablaste de un hilo que nace en el meñique
+porque el meñique conoce el camino al corazón,
+un hilo rojo que se estira, se enreda, se tensa,
+pero no se rompe.
+
+Dices que estás en el medio,
+ese tramo del puente donde ya no se ve la orilla de atrás
+y todavía se imagina la de adelante.
+Yo no tengo prisa:
+a los puentes hay que cruzarlos despacio
+cuando del otro lado espera alguien que lleva tu nombre
+y una sonrisa guardada para ti`
+  },
+  {
+    week: 7,
+    range: "4 oct – 11 oct, 2026",
+    title: "El baile que ya existe",
+    text: `Te confieso que no traigo manual.
+Traigo un corazón que aprende a gatas,
+que a veces duda, a veces tropieza,
+que no sabe si dijo la palabra correcta
+pero sabe, con una certeza que asusta,
+hacia dónde se inclinan todas sus brújulas.
+
+Y tú me dijiste, con esa voz de puerto tranquilo:
+yo sostendré tu mano mientras aprendes.
+Y entendí que amar no es saber el camino,
+es tener a alguien que camine con los ojos abiertos
+mientras tú cierras los tuyos para sentir.
+
+Hay un baile que se repite en tu cabeza,
+un bucle de violines
+donde mis manos ya conocen tu cintura
+y tus pasos marcan fuerte el suelo,
+como quien firma una promesa con los talones.
+
+Quién sabe si es un ensayo.
+Quién sabe si es la memoria de algo que aún no pasó.
+Quizás ese baile es el día en que celebremos
+una vida entera construida a punta de paciencia,
+y el salón sea una cocina,
+y los violines sean tu risa,
+y el mundo, por una vez,
+nos deje bailar sin prisa.
+
+Esta semana todavía respira.
+Aún le quedan días para escribirse.
+Pero ya sabe cómo termina:
+conmigo aprendiendo a amarte
+y tú, de la mano, sin soltarme`
   },
 ];
 
