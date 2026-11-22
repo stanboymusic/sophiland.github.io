@@ -7,7 +7,7 @@ import {
   getOrCreateGardenDoc,
   createGarden,
   getLocalRole, getLocalName, setLocalRole,
-  canWaterToday, waterGarden,
+  canWaterToday, waterGarden, lilyStage,
   canPostToday, postMessage, getMessages,
   HOUSE_STAGES, buildNextStage, setHouseName,
   PET_TYPES, adoptPet, setPetName,
@@ -19,9 +19,9 @@ const modalInner = () => document.getElementById("garden-modal-inner");
 
 // ── Punto de entrada: botón "Entrar al jardín" ───────────
 export function initGardenButton() {
-  const btn = document.getElementById("garden-btn");
-  if (!btn) return;
-  btn.addEventListener("click", openGarden);
+  ["garden-btn", "garden-btn-app"].forEach(id => {
+    document.getElementById(id)?.addEventListener("click", openGarden);
+  });
 }
 
 async function openGarden() {
@@ -198,13 +198,14 @@ async function renderGardenView(gardenDoc, role, name) {
 
       <!-- Lirio con crecimiento -->
       <div class="gdn-lily-stage" id="gdn-lily-wrap">
-        ${lilyClusterSVG(gardenDoc.growthStage || 0)}
+        ${lilyClusterSVG(lilyStage())}
       </div>
+      <p class="gdn-bloom-hint" style="text-align:center;opacity:.6;font-size:.8rem;margin-top:-.4rem;">${bloomHint()}</p>
 
       <!-- Stats -->
       <div class="gdn-stats">
         <div class="gdn-stat">
-          <span class="gdn-stat-num">${gardenDoc.growthStage || 0}<span class="gdn-stat-max">/5</span></span>
+          <span class="gdn-stat-num">${lilyStage()}<span class="gdn-stat-max">/5</span></span>
           <span class="gdn-stat-label">Etapa</span>
         </div>
         <div class="gdn-stat">
@@ -380,6 +381,14 @@ async function renderGardenView(gardenDoc, role, name) {
   });
 }
 
+// ── Texto bajo el lirio ───────────────────────────────────
+function bloomHint() {
+  const left = TARGET_DATE - new Date();
+  if (left <= 0) return "El lirio ya floreció 🌷";
+  const days = Math.ceil(left / 86400000);
+  return `Florece el 21 de febrero a las 12:00 a.m. — faltan ${days} ${days === 1 ? "día" : "días"}`;
+}
+
 // ── Animación de riego ─────────────────────────────────────
 function playWaterAnimation() {
   const wrap = document.getElementById("gdn-lily-wrap");
@@ -494,7 +503,7 @@ document.addEventListener("DOMContentLoaded", initGardenButton);
 
 // ── Sección de la casa (render) ────────────────────────
 function renderHouseSection(gardenDoc, role) {
-  const houseUnlocked = gardenDoc.houseUnlocked || false;
+  const houseUnlocked = gardenDoc.houseUnlocked || lilyStage() >= 5;
   const houseStage    = gardenDoc.houseStage    || 0;
   const houseName     = gardenDoc.houseName     || null;
   const resources     = gardenDoc.totalResources || 0;

@@ -10,8 +10,9 @@
 // Fecha de desbloqueo: 21 feb 2027, 12:00am hora Venezuela (UTC-4) = 04:00 UTC
 const TARGET_DATE = new Date("2027-02-21T04:00:00Z");
 
-// Fecha de inicio del proyecto (para calcular el progreso del lirio)
-const START_DATE = new Date("2026-08-27T00:00:00Z");
+// Fecha de inicio del crecimiento del lirio: 22 nov 2026, 12:00am hora Venezuela (UTC-4) = 04:00 UTC
+// El lirio crece de forma continua entre START_DATE y TARGET_DATE y florece del todo en TARGET_DATE.
+const START_DATE = new Date("2026-11-22T04:00:00Z");
 
 // --- DIARIO: agrega una entrada por cada momento que quieras guardar ---
 // (Estos datos se suben a Firestore con seedFirestore())

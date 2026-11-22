@@ -46,40 +46,31 @@
   <button id="garden-btn">🌱 Entrar al jardín</button>
 </div>
 
-<button id="devToggle" title="Solo para pruebas de Angel">vista previa (borrar antes de enviar)</button>
-
 <!-- ============ APP (desbloqueado) ============ -->
 <div id="app">
   <nav class="mainnav">
-    <button data-view="diario" class="active">Diario</button>
-    <button data-view="galeria">Galería</button>
+    <button data-view="galeria" class="active">Galería</button>
     <button data-view="poemario">Poemario</button>
     <button data-view="libro">Libro</button>
+    <button id="garden-btn-app">🌷 Jardín</button>
   </nav>
 
-  <section class="view active" id="view-diario">
-    <p class="eyebrow serif" style="font-style:italic;">Sección 1</p>
-    <h2>Diario</h2>
-    <p class="lede">Pequeños momentos, contados apenas pasaron.</p>
-    <div id="diario-list"></div>
-  </section>
-
-  <section class="view" id="view-galeria">
-    <p class="eyebrow" style="font-style:italic;">Sección 2</p>
+  <section class="view active" id="view-galeria">
+    <p class="eyebrow" style="font-style:italic;">Sección 1</p>
     <h2>Galería</h2>
     <p class="lede">Todo lo que nos hemos fotografiado, y lo que tú me has mandado.</p>
     <div class="gallery-grid" id="gallery-grid"></div>
   </section>
 
   <section class="view" id="view-poemario">
-    <p class="eyebrow" style="font-style:italic;">Sección 3</p>
+    <p class="eyebrow" style="font-style:italic;">Sección 2</p>
     <h2>Poemario</h2>
     <p class="lede">Un poema por cada semana, desde que empecé a contar los días.</p>
     <div id="poemario-list"></div>
   </section>
 
   <section class="view" id="view-libro">
-    <p class="eyebrow" style="font-style:italic;">Sección 4</p>
+    <p class="eyebrow" style="font-style:italic;">Sección 3</p>
     <h2>El libro</h2>
     <p class="lede">La historia completa de por qué me cautivaste.</p>
     <div id="libro-list"></div>

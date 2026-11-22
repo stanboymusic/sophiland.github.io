@@ -22,8 +22,7 @@ const db  = getFirestore(app);
 // ── Función principal: carga datos de Firestore, o usa los locales de data.js ──
 export async function loadContent() {
   try {
-    const [diarioSnap, galeriaSnap, poemasSnap, libroSnap] = await Promise.all([
-      getDocs(collection(db, "diario")),
+    const [galeriaSnap, poemasSnap, libroSnap] = await Promise.all([
       getDocs(collection(db, "galeria")),
       getDocs(collection(db, "poemario")),
       getDocs(collection(db, "libro")),
@@ -40,7 +39,6 @@ export async function loadContent() {
     };
 
     return {
-      diaryEntries:   fromFirestore(diarioSnap,  window._localDiary   || []),
       galleryPhotos:  fromFirestore(galeriaSnap,  window._localGallery || []),
       poems:          fromFirestore(poemasSnap,   window._localPoems   || []),
       bookChapters:   fromFirestore(libroSnap,    window._localBook    || []),
@@ -50,7 +48,6 @@ export async function loadContent() {
     console.warn("⚠️  No se pudo conectar con Firestore. Usando datos locales.", err);
     // Fallback: usa los datos que ya estaban en data.js
     return {
-      diaryEntries:  window._localDiary   || [],
       galleryPhotos: window._localGallery || [],
       poems:         window._localPoems   || [],
       bookChapters:  window._localBook    || [],
@@ -61,7 +58,6 @@ export async function loadContent() {
 // ── Seed: sube los datos locales a Firestore (solo la primera vez) ──
 // Ejecuta seedFirestore() desde la consola del navegador si quieres poblar la BD.
 export async function seedFirestore() {
-  const localDiary   = window._localDiary   || [];
   const localGallery = window._localGallery || [];
   const localPoems   = window._localPoems   || [];
   const localBook    = window._localBook    || [];
@@ -74,7 +70,6 @@ export async function seedFirestore() {
     console.log(`✅ ${colName}: ${items.length} documentos subidos.`);
   };
 
-  await writeAll("diario",   localDiary,   (e, i) => `entry-${i}`);
   await writeAll("galeria",  localGallery, (e, i) => `photo-${i}`);
   await writeAll("poemario", localPoems,   (e, i) => `poem-${i}`);
   await writeAll("libro",    localBook,    (e, i) => `chapter-${i}`);

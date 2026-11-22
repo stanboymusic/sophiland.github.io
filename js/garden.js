@@ -26,6 +26,18 @@ const app = existingApps.find(a => a.name === "[DEFAULT]") ||
 
 const db = getFirestore(app);
 
+// ── Crecimiento del lirio: depende del TIEMPO, no de los riegos ──────
+// START_DATE y TARGET_DATE vienen de data.js. Etapa 0-4 mientras crece, 5 = florecido.
+export function lilyProgress(now = new Date()) {
+  const p = (now - START_DATE) / (TARGET_DATE - START_DATE);
+  return Math.min(Math.max(p, 0), 1);
+}
+
+export function lilyStage(now = new Date()) {
+  const p = lilyProgress(now);
+  return p >= 1 ? 5 : Math.min(4, Math.floor(p * 5));
+}
+
 // ── Zona horaria Venezuela (UTC-4) ──────────────────────
 function todayVE() {
   const now = new Date();
@@ -126,8 +138,8 @@ export async function waterGarden(role) {
   // WaterCount
   const newWaterCount = (g.waterCount || 0) + 1;
 
-  // GrowthStage: sube cada 5 riegos totales (máx 5)
-  const newGrowthStage = Math.min(5, Math.floor(newWaterCount / 5));
+  // GrowthStage: ahora depende del tiempo (florece el 21 feb 2027, 12:00am)
+  const newGrowthStage = lilyStage();
 
   // Verificar si el jardín quedó en etapa 5 para desbloquear la casa
   const shouldUnlockHouse = newGrowthStage >= 5 && !(g.houseUnlocked);
@@ -285,3 +297,17 @@ export async function setPetName(role, petKey, name) {
     [`pets.${petKey}.name`]: name.trim().slice(0, 30),
   });
 }
+
+// ── Reinicio del lirio (se ejecuta UNA vez desde la consola) ─────────
+// Pone la etapa en 0 y re-bloquea la casa solo si todavía no se había empezado a construir.
+// No toca semillas, racha, riegos, mensajes ni mascotas.
+export async function resetLilyGrowth() {
+  const snap = await getDoc(GARDEN_DOC());
+  if (!snap.exists()) throw new Error("El jardín no existe todavía.");
+  const g = snap.data();
+  const patch = { growthStage: 0, lilyResetAt: serverTimestamp() };
+  if (!g.houseStage) patch.houseUnlocked = false;
+  await updateDoc(GARDEN_DOC(), patch);
+  console.log("🌱 Lirio reiniciado.", patch);
+}
+window.resetLilyGrowth = resetLilyGrowth;
