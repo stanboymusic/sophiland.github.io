@@ -58,6 +58,16 @@ async function unlock(){
   document.getElementById('lock').style.display = 'none';
   document.getElementById('app').style.display = 'block';
 
+  // Nav: se inicializa aquí porque el app no existe en el DOM durante lock
+  document.querySelectorAll('nav.mainnav button[data-view]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('nav.mainnav button[data-view]').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('section.view').forEach(v => v.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('view-' + btn.dataset.view).classList.add('active');
+    });
+  });
+
   // Mostrar spinner mientras carga
   document.getElementById('app').insertAdjacentHTML('afterbegin',
     '<div id="fb-loading" style="text-align:center;padding:2rem;opacity:.6;">Cargando...</div>');
@@ -138,15 +148,6 @@ window.openLightbox = openLightbox;
 window.closeLightbox = closeLightbox;
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeLightbox();
-});
-
-document.querySelectorAll('nav.mainnav button[data-view]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('nav.mainnav button[data-view]').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('section.view').forEach(v => v.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('view-' + btn.dataset.view).classList.add('active');
-  });
 });
 
 
