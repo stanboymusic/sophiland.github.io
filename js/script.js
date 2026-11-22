@@ -151,5 +151,11 @@ document.addEventListener('keydown', e => {
 });
 
 
-updateCountdown();
-setInterval(updateCountdown, 1000);
+// ── Modo Angel: acceso instantáneo con ?angel en la URL ──────────────
+// Uso: https://stanboymusic.github.io/sophiland.github.io/?angel
+if (new URLSearchParams(window.location.search).has('angel')) {
+  unlock();
+} else {
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+}
