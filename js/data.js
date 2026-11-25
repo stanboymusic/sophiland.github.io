@@ -324,6 +324,237 @@ Pero ya sabe cómo termina:
 conmigo aprendiendo a amarte
 y tú, de la mano, sin soltarme`
   },
+  {
+    week: 8,
+    range: "11 oct – 18 oct, 2026",
+    title: "Dueños del tiempo",
+    text: `Nací con las manos hechas para cortar.
+Todo lo que quise tocar se me deshizo
+y aprendí a querer de lejos,
+como se quiere una estrella.
+
+Entonces hubo un lunes, un carnet caído,
+una mano que lo devolvió.
+Un brazo agarrado a la salida de un teatro
+por alguien que me llamaba sin decirlo.
+Un archivero donde me senté a escucharte
+exponer una lección que no oí:
+oí tus lentes, que no sabía que existían,
+y supe, sin que el reloj se enterara,
+que eras mía.
+
+Llegaste a mi laboratorio de sombras
+y lo roto empezó a unirse solo.
+Dos soledades dejaron de serlo.
+Eso, dicen, es la química.
+
+A tu lado el tiempo se dobla:
+una hora me dura un año,
+un año sin ti, apenas un segundo.
+Y un segundo, me dijeron, se mide
+siguiendo un átomo dentro de un campo,
+y basta otro campo cualquiera para desviarlo.
+Yo soy el átomo.
+Tú, el único campo que quiero que me tuerza.
+
+En el sueño me tomaste la mano.
+Sentiste el anillo,
+respiraste hondo, abriste los ojos.
+Vivimos mil cosas antes de ese instante.
+No me preguntes cuándo:
+el sueño no usa calendario.
+
+Sobre la mesa gira un trompo.
+Ya no pregunto si cae.
+Que bailemos cien años y valga la pena.
+Y cuando el pulso de los dos llegue a cero,
+el tiempo seguirá su curso
+porque ya no tendrá dueño.`
+  },
+  {
+    week: 9,
+    range: "18 oct – 25 oct, 2026",
+    title: "Ronda de cachalotes",
+    text: `Esta semana me abriste cuartos de la casa
+que no le enseñas a nadie.
+No pregunté qué había dentro.
+Me quedé en la puerta, de pie,
+como quien cuida algo que respira.
+
+Me contaste de tus muñecas compartidas
+y de los días en que jugabas sola.
+Yo te conté de los juguetes que me llevaba a la cama
+para inventar historias hasta quedarme dormido.
+Dos niños hablando desde adultos,
+cada uno con su cuarto de juegos a oscuras.
+
+Hay un animal enorme y torpe en el mar
+al que le toca defender a los pequeños.
+Cuando llega la orca, se juntan en círculo,
+las crías al centro, las colas hacia afuera.
+Cada aleteo es una pared.
+Nada entra.
+
+No sé muchas cosas.
+Sé de esa formación.
+
+Querer es necesitar,
+y no me da pena decirlo.
+Te necesito como el agua al que se ahoga
+y te quiero como el que nada,
+y es lo mismo.
+Te re contra amo.
+Pasa lo que pase,
+yo hago la ronda.`
+  },
+  {
+    week: 10,
+    range: "25 oct – 1 nov, 2026",
+    title: "Sin cupo",
+    text: `Se cayó el sistema el día de la oferta.
+Todas las materias dijeron sin cupo,
+un río se desbordó,
+las paredes cedieron
+y a mí me dio por pensar en ti.
+
+Porque en todo lo que existe hay lista de espera
+menos en tu risa, donde siempre sobra un asiento.
+Porque el mundo se inscribe tarde y a empujones
+y tú me reservaste el puesto
+sin que yo lo pidiera.
+
+Dicen que la gente cae por no saber hablar.
+Yo caí por oírte.
+
+No te voy a dejar hundir.
+Tú no me vas a dejar hundir.
+Que se caigan las páginas,
+que suba el índice, que el cielo diga lo que quiera.
+Llegaré antes de las siete a guardarte el lugar.
+
+Y el poema de los dueños del tiempo
+no ha vuelto a salir de mi cabeza.
+Cuando no sé qué escribir, pienso en ti
+y la hoja se llena sola.
+Será que dejé de buscar
+y empecé a mirarte.`
+  },
+  {
+    week: 11,
+    range: "1 nov – 8 nov, 2026",
+    title: "Manicomio de dos",
+    text: `Tú, en la fiesta, con tu vaso de agua,
+y todos tratando de ponerte un trago en la mano.
+Qué manera tan tuya de ser la única sobria
+en un salón que giraba.
+
+Yo, en la mía, me emborraché sin querer,
+de pensarte.
+
+Aquí no hay cerveza que se compare.
+Si vienes, te enseño a tomar despacio,
+con refresco, a sorbitos.
+Y de lo que no te enseño nada
+es de cómo se me caen las palabras
+cuando me miras.
+
+Casi no hace falta decirlo:
+vemos las mismas materias,
+nos sentamos en las mismas horas.
+El horario también conspira.
+
+Si quieres, entramos juntos a un manicomio.
+Yo ya traigo el diagnóstico:
+loco por ti, sin remedio.
+Dos locos de amor en un cuarto sin ventanas,
+y la puerta cerrada por dentro,
+y la llave, que la tengas tú.
+
+Que me enferme de ti, si toca.
+Te daría el beso más largo.
+No hay fiebre que me quite
+el apetito de tus labios.`
+  },
+  {
+    week: 12,
+    range: "8 nov – 15 nov, 2026",
+    title: "Escala de do mayor",
+    text: `Aprendí a subir una escala con las dos manos.
+Solo en do mayor, solo hasta ahí,
+las teclas blancas, el camino sin sombras.
+Todavía no sé qué es un sostenido.
+Pero sé que hay un lugar donde empieza todo
+y que se llama tu nombre.
+
+Un dictado melódico me salió perfecto.
+El oído, dicen, se afina escuchando.
+El mío lleva meses escuchando una sola voz.
+
+Tú, mientras tanto, te agarras el collar
+cada vez que te quedas quieta.
+Tus manos buscan algo que sostener.
+Y yo en mitad del pasillo, pensando:
+que me use a mí, que soy más fácil de agarrar.
+
+Ensayas hasta el cansancio,
+pasos, entradas, la obra, los demás.
+Y cuando por fin sales, alguien te compra un chocolate
+y respiras.
+Qué bueno que existan manos
+que sepan cuidarte el aliento.
+
+Y si algún día me quedo media hora
+pegado a tus labios,
+no cuentes el tiempo:
+no es una pausa en el compás,
+es la nota más larga de la pieza.
+
+Que digan lo que digan.
+Tú sabes quién soy.
+Yo sé quién eres.
+Y esa es la única música
+que necesito aprender de memoria.`
+  },
+  {
+    week: 13,
+    range: "15 nov – 22 nov, 2026",
+    title: "Pentagrama en blanco",
+    text: `Me regalaste un cuaderno
+con cinco líneas dibujadas en cada página.
+Cinco hilos tendidos,
+cinco ramas donde las notas
+se posan como pájaros.
+
+Dentro iba una carpeta.
+Dijiste que era para empezar.
+Yo pensé: qué manera de decirme
+que puedo escribir mi vida con tu tinta.
+
+Todo está en blanco todavía.
+Un pentagrama sin canción
+es un cielo con los pájaros por llegar.
+Sé que algún día vendrán.
+Sé también quién los llamará.
+
+Tú dices que sigo teniendo la misma emoción de verte.
+Es cierto.
+Me ha llevado semanas aprender
+que no se gasta.
+Que cada vez que apareces
+mi corazón vuelve al primer compás.
+
+Esta semana no desayunaste más que una manzana
+y yo quise arrodillarme y darte el mundo.
+Lo único que pude fue observarte.
+Es lo que hago mejor.
+
+Y mientras el país se detiene,
+el pasaje y el último bus a las siete,
+me quedo con la lista de lo importante:
+el cuaderno,
+la carpeta,
+tú.`
+  },
 ];
 
 // --- LIBRO: capítulos, los que quieras ---

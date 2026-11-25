@@ -1,0 +1,236 @@
+{
+  "communities": {
+    "0": [
+      "js_firebase",
+      "js_firebase_app",
+      "js_firebase_db",
+      "js_firebase_firebaseconfig",
+      "js_firebase_loadcontent",
+      "js_firebase_seedfirestore",
+      "js_script",
+      "js_script_closelightbox",
+      "js_script_currentgalleryphotos",
+      "js_script_initpoemaccordion",
+      "js_script_openlightbox",
+      "js_script_pad",
+      "js_script_renderall",
+      "js_script_unlock",
+      "js_script_updatecountdown",
+      "ref_https"
+    ],
+    "1": [
+      "js_garden",
+      "js_garden_adoptpet",
+      "js_garden_buildnextstage",
+      "js_garden_canposttoday",
+      "js_garden_canwatertoday",
+      "js_garden_db",
+      "js_garden_existingapps",
+      "js_garden_garden_doc",
+      "js_garden_getmessages",
+      "js_garden_house_stages",
+      "js_garden_pet_types",
+      "js_garden_postmessage",
+      "js_garden_todayve",
+      "js_garden_ui_playwateranimation",
+      "js_garden_ui_rendergardenview",
+      "js_garden_watergarden"
+    ],
+    "2": [
+      "parche_1_js_data",
+      "parche_1_js_data_bookchapters",
+      "parche_1_js_data_diaryentries",
+      "parche_1_js_data_galleryphotos",
+      "parche_1_js_data_poems",
+      "parche_1_js_data_start_date",
+      "parche_1_js_data_target_date"
+    ],
+    "3": [
+      "parche_1_js_script",
+      "parche_1_js_script_closelightbox",
+      "parche_1_js_script_openlightbox",
+      "parche_1_js_script_pad",
+      "parche_1_js_script_renderall",
+      "parche_1_js_script_unlock",
+      "parche_1_js_script_updatecountdown"
+    ],
+    "4": [
+      "js_garden_getorcreategardendoc",
+      "js_garden_sethousename",
+      "js_garden_setpetname",
+      "js_garden_ui_modalinner",
+      "js_garden_ui_renderhousenamemodal",
+      "js_garden_ui_renderpetnamemodal"
+    ],
+    "5": [
+      "js_garden_creategarden",
+      "js_garden_setlocalrole",
+      "js_garden_ui_lilysmallsvg",
+      "js_garden_ui_renderonboarding",
+      "js_garden_ui_renderonboarding_updateconfirmbtn"
+    ],
+    "6": [
+      "js_garden_ui",
+      "js_garden_ui_closegarden",
+      "js_garden_ui_lilyclustersvg",
+      "js_garden_ui_modal",
+      "js_garden_ui_singlelily"
+    ],
+    "7": [
+      "js_garden_ui_eschtml",
+      "js_garden_ui_housesvg",
+      "js_garden_ui_renderhousesection",
+      "js_garden_ui_rendermessages",
+      "js_garden_ui_renderpetssection"
+    ],
+    "8": [
+      "js_garden_getlocalname",
+      "js_garden_getlocalrole",
+      "js_garden_ui_initgardenbutton",
+      "js_garden_ui_opengarden"
+    ],
+    "9": [
+      "js_data",
+      "js_data_start_date",
+      "js_data_target_date"
+    ]
+  },
+  "cohesion": {
+    "0": 0.175,
+    "1": 0.23333333333333334,
+    "2": 0.2857142857142857,
+    "3": 0.42857142857142855,
+    "4": 0.4,
+    "5": 0.4,
+    "6": 0.6,
+    "7": 0.4,
+    "8": 0.5,
+    "9": 0.6666666666666666
+  },
+  "gods": [
+    {
+      "id": "js_garden_ui_rendergardenview",
+      "label": "renderGardenView()",
+      "degree": 22
+    },
+    {
+      "id": "js_garden_ui_renderonboarding",
+      "label": "renderOnboarding()",
+      "degree": 9
+    },
+    {
+      "id": "js_garden_ui_opengarden",
+      "label": "openGarden()",
+      "degree": 9
+    },
+    {
+      "id": "js_garden_garden_doc",
+      "label": "GARDEN_DOC()",
+      "degree": 8
+    },
+    {
+      "id": "js_garden_getorcreategardendoc",
+      "label": "getOrCreateGardenDoc()",
+      "degree": 7
+    },
+    {
+      "id": "js_garden_ui_modalinner",
+      "label": "modalInner()",
+      "degree": 6
+    },
+    {
+      "id": "js_garden_ui_renderpetnamemodal",
+      "label": "renderPetNameModal()",
+      "degree": 6
+    },
+    {
+      "id": "js_garden_todayve",
+      "label": "todayVE()",
+      "degree": 5
+    },
+    {
+      "id": "js_garden_watergarden",
+      "label": "waterGarden()",
+      "degree": 5
+    },
+    {
+      "id": "js_garden_ui_renderhousenamemodal",
+      "label": "renderHouseNameModal()",
+      "degree": 5
+    }
+  ],
+  "surprises": [
+    {
+      "source": "renderGardenView()",
+      "target": "getOrCreateGardenDoc()",
+      "source_files": [
+        "js/garden-ui.js",
+        "js/garden.js"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "openGarden()",
+      "target": "getOrCreateGardenDoc()",
+      "source_files": [
+        "js/garden-ui.js",
+        "js/garden.js"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "unlock()",
+      "target": "loadContent()",
+      "source_files": [
+        "js/script.js",
+        "js/firebase.js"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "renderGardenView()",
+      "target": "adoptPet()",
+      "source_files": [
+        "js/garden-ui.js",
+        "js/garden.js"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "renderGardenView()",
+      "target": "buildNextStage()",
+      "source_files": [
+        "js/garden-ui.js",
+        "js/garden.js"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `renderGardenView()` connect `garden.js` to `getOrCreateGardenDoc`, `renderOnboarding`, `garden-ui.js`, `escHtml`, `openGarden`?",
+      "why": "High betweenness centrality (0.033) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `renderOnboarding()` connect `renderOnboarding` to `openGarden`, `garden.js`, `getOrCreateGardenDoc`, `garden-ui.js`?",
+      "why": "High betweenness centrality (0.024) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `getOrCreateGardenDoc()` connect `getOrCreateGardenDoc` to `openGarden`, `garden.js`, `garden-ui.js`?",
+      "why": "High betweenness centrality (0.010) - this node is a cross-community bridge."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "js/data.js": {
+    "mtime": 1791472201.2176304,
+    "seen": 1792167208.3008716,
+    "ast_hash": "d839e39251391eacfaa4ca005fb3bf91",
+    "semantic_hash": "d839e39251391eacfaa4ca005fb3bf91"
+  },
+  "js/firebase.js": {
+    "mtime": 1788733385.9200423,
+    "seen": 1792167208.3008869,
+    "ast_hash": "0fd8bf02316d527fe9c3b4cbf514445d",
+    "semantic_hash": "0fd8bf02316d527fe9c3b4cbf514445d"
+  },
+  "js/garden-ui.js": {
+    "mtime": 1788738239.498013,
+    "seen": 1792167208.3008943,
+    "ast_hash": "c30aa765e73c1a5dc7d229d7e37e08c4",
+    "semantic_hash": "c30aa765e73c1a5dc7d229d7e37e08c4"
+  },
+  "js/garden.js": {
+    "mtime": 1788739161.8240428,
+    "seen": 1792167208.3008995,
+    "ast_hash": "2e792e283c5f62fe0462cf695e9063d7",
+    "semantic_hash": "2e792e283c5f62fe0462cf695e9063d7"
+  },
+  "js/script.js": {
+    "mtime": 1789429932.8925686,
+    "seen": 1792167208.3009048,
+    "ast_hash": "ba4a4c60ade101c29b2aff9b83c38475",
+    "semantic_hash": "ba4a4c60ade101c29b2aff9b83c38475"
+  },
+  "parche 1/js/data.js": {
+    "mtime": 1787884396.0,
+    "seen": 1792167208.300909,
+    "ast_hash": "185587d566389b6ecf70e3a4cc8e8096",
+    "semantic_hash": "185587d566389b6ecf70e3a4cc8e8096"
+  },
+  "parche 1/js/script.js": {
+    "mtime": 1787885983.0,
+    "seen": 1792167208.3009138,
+    "ast_hash": "06205c032bc88690f8748aae4e396aea",
+    "semantic_hash": "06205c032bc88690f8748aae4e396aea"
+  }
+}
